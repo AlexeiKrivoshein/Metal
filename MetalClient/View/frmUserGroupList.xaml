@@ -1,0 +1,45 @@
+﻿<Window x:Class="MetalClient.frmUserGroupList"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:controls="clr-namespace:MetalClient.Controls"
+        mc:Ignorable="d"
+        Title="Группы пользователей" Height="700" Width="600" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <DockPanel VerticalAlignment="Stretch">
+            <TextBlock DockPanel.Dock="Top" Name="frmHeader" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center">Группы пользователей</TextBlock>
+
+            <Border Style="{StaticResource MainBorderStyle}" DockPanel.Dock="Top">
+                <DockPanel VerticalAlignment="Center">
+                    <Button Style="{StaticResource MainButtonStyle}" Margin="5" Content="Добавить" Command="{Binding AddCommand}" DockPanel.Dock="Left"/>
+                    <Button Style="{StaticResource MainButtonStyle}" Margin="5" Content="Открыть" Command="{Binding OpenCommand}" DockPanel.Dock="Left"/>
+                    <Button Style="{StaticResource MainButtonStyle}" Margin="5" Content="Удалить" Command="{Binding RemoveCommand}" DockPanel.Dock="Left"/>
+                    <Label></Label>
+                </DockPanel>
+            </Border>
+
+            <Border Style="{StaticResource MainBorderStyle}" DockPanel.Dock="Top">
+                <DockPanel>
+                    <TextBlock DockPanel.Dock="Left" Margin="5">Поиск:</TextBlock>
+                    <TextBox Name="Filter" Background="White" Margin="5">
+                        <TextBox.InputBindings>
+                            <KeyBinding Command="{Binding Path=FilterCommand}" CommandParameter="{Binding ElementName=Filter, Path=Text}" Key="Enter"/>
+                        </TextBox.InputBindings>
+                    </TextBox>
+                </DockPanel>
+            </Border>
+
+            <controls:MDataGrid
+                  ItemsSource="{Binding DefaultView}"
+                  SelectedItem="{Binding Selected, Mode=TwoWay}"
+                  SelectCommand="{Binding SelectCommand}">
+                <controls:MDataGrid.Columns>
+                    <DataGridTextColumn Header="Наименование" Width="*"
+                                    Binding="{Binding Path=Name}"/>
+                </controls:MDataGrid.Columns>
+            </controls:MDataGrid>
+        </DockPanel>
+    </Grid>
+</Window>

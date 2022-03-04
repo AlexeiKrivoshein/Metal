@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="dacc7ff1cbd345d2a49f6083691fb5c2" Name="Diagram1" ZoomLevel="85" >
+        <EntityTypeShape EntityType="MetalEDM.Order" Width="2.375" PointX="3.125" PointY="0.5" />
+        <EntityTypeShape EntityType="MetalEDM.Customer" Width="1.5" PointX="0.5" PointY="2.75" />
+        <EntityTypeShape EntityType="MetalEDM.Employee" Width="1.5" PointX="9.625" PointY="0.5" />
+        <EntityTypeShape EntityType="MetalEDM.Post" Width="1.5" PointX="12.25" PointY="0.5" />
+        <EntityTypeShape EntityType="MetalEDM.Operation" Width="1.5" PointX="7.875" PointY="3.125" />
+        <EntityTypeShape EntityType="MetalEDM.Material" Width="1.5" PointX="9.5" PointY="5.375" />
+        <EntityTypeShape EntityType="MetalEDM.OrderGroup" Width="1.5" PointX="0.5" PointY="0.625" />
+        <AssociationConnector Association="MetalEDM.СustomerOrder" />
+        <AssociationConnector Association="MetalEDM.OrderGroupOrder" />
+        <EntityTypeShape EntityType="MetalEDM.OrderOperation" Width="1.5" PointX="6" PointY="0.5" />
+        <AssociationConnector Association="MetalEDM.OrderOrderWork" />
+        <AssociationConnector Association="MetalEDM.OperationOrderOperation" ManuallyRouted="false" >
+        </AssociationConnector>
+        <EntityTypeShape EntityType="MetalEDM.LimitCardMaterial" PointX="6" PointY="6.125" Width="1.5" />
+        <AssociationConnector Association="MetalEDM.OrderLimitCard" />
+        <AssociationConnector Association="MetalEDM.MaterialLimitCard" />
+        <EntityTypeShape EntityType="MetalEDM.LimitCardOperation" Width="1.5" PointX="7.875" PointY="10.125" />
+        <AssociationConnector Association="MetalEDM.OrderLimitCardWork" />
+        <AssociationConnector Association="MetalEDM.OperationLimitCardOperation" />
+        <EntityTypeShape EntityType="MetalEDM.MetalFile" Width="1.5" PointX="0.5" PointY="11.125" />
+        <AssociationConnector Association="MetalEDM.EmployeePost" />
+        <EntityTypeShape EntityType="MetalEDM.LimitCardFactMaterial" Width="1.5" PointX="9.5" PointY="7.875" />
+        <AssociationConnector Association="MetalEDM.LimitCardMaterialLimitCardFactMaterial" />
+        <AssociationConnector Association="MetalEDM.MaterialLimitCardFactMaterial" />
+        <AssociationConnector Association="MetalEDM.OrderOperationEmployee" />
+        <EntityTypeShape EntityType="MetalEDM.UserGroup" Width="1.5" PointX="12.25" PointY="2.625" />
+        <EntityTypeShape EntityType="MetalEDM.SysTab" Width="1.5" PointX="14.25" PointY="0.625" />
+        <AssociationConnector Association="MetalEDM.MetalFileOrder" />
+        <AssociationConnector Association="MetalEDM.EmployeeUserGroup" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

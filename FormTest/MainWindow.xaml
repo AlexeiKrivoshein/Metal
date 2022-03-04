@@ -1,0 +1,47 @@
+﻿<Window x:Class="FormTest.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FormTest"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <StackPanel>
+        <DataGrid 
+        ItemsSource="{Binding Path=houses, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+        AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="name" Binding="{Binding name}" />
+                <DataGridTextColumn Header="owner (as value)" Binding="{Binding ownerObj.name}"/>
+
+                <DataGridTemplateColumn Header="owner (as combobox)" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ComboBox
+                            ItemsSource="{Binding Path=owners, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                            DisplayMemberPath="name"
+                            SelectedValue="{Binding ownerObj.id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            SelectedValuePath="id"
+                            />
+
+                            <!--  SelectedItem="{Binding houses, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"-->
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Check" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Name="checkValue" Click="CheckValue_Click"></Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+
+        </DataGrid>
+
+        <TextBox Name="txtValue" Width="200" HorizontalAlignment="Left" IsReadOnly="True" Background="GhostWhite" 
+                 Text="{Binding Path=name, Mode = TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <Button Height="25" Width="80" Name="btnChange" Click="BtnChange_Click"></Button>
+    </StackPanel>
+</Window>

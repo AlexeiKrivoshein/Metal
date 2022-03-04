@@ -1,0 +1,1613 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MetalEDM.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2005" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CustomerSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Employee" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Mail" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Fax" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="Version" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EmployeeSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Secondname" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Patronymic" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PostId" Type="uniqueidentifier" />
+          <Property Name="UseForLogin" Type="bit" Nullable="false" />
+          <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="Version" Type="bigint" Nullable="false" />
+          <Property Name="UserGroupId" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="LimitCardFactMaterialSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="LimitCardMaterialId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="MaterialId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Count" Type="float" Nullable="false" />
+          <Property Name="Price" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LimitCardMaterialSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Index" Type="int" Nullable="false" />
+          <Property Name="OrderId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="MaterialId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Units" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="UsagePerUnits" Type="float" Nullable="false" />
+          <Property Name="UsagePerOrder" Type="float" Nullable="false" />
+          <Property Name="Multiplicity" Type="float" Nullable="false" />
+          <Property Name="Price" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LimitCardOperationSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Index" Type="int" Nullable="false" />
+          <Property Name="OrderId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="OperationId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ElapsedHours" Type="smallint" Nullable="false" />
+          <Property Name="ElapsedMinutes" Type="smallint" Nullable="false" />
+          <Property Name="PricePerHour" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MaterialSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="Version" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MetalFileSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Path" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Index" Type="int" Nullable="false" />
+          <Property Name="ChunkCount" Type="int" Nullable="false" />
+          <Property Name="OrderId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OperationSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="Version" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderGroupSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="Version" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderOperationSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Index" Type="int" Nullable="false" />
+          <Property Name="OrderId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="OperationId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Count" Type="int" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" Nullable="false" />
+          <Property Name="EndDate" Type="datetime" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="EmployeeId" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="OrderSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Number" Type="int" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Count" Type="int" Nullable="false" />
+          <Property Name="CustomerId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ReadyDate" Type="datetime" Nullable="false" />
+          <Property Name="AcceptedDate" Type="datetime" Nullable="false" />
+          <Property Name="DrawingNumber" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DrawingState" Type="int" Nullable="false" />
+          <Property Name="IsCustomerMaterial" Type="bit" Nullable="false" />
+          <Property Name="CustomerMaterial" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CustomerReadyDate" Type="datetime" Nullable="false" />
+          <Property Name="MaterialAgreed" Type="datetime" Nullable="false" />
+          <Property Name="TechCalcPrice" Type="float" Nullable="false" />
+          <Property Name="TechCalcHour" Type="int" Nullable="false" />
+          <Property Name="TechCalcMinutes" Type="int" Nullable="false" />
+          <Property Name="TechCalcPriceDate" Type="datetime" Nullable="false" />
+          <Property Name="TechCalcMultiplier" Type="float" Nullable="false" />
+          <Property Name="TechMaterialReqDate" Type="datetime" Nullable="false" />
+          <Property Name="DirectorExpectedPrice" Type="float" Nullable="false" />
+          <Property Name="DirectorExpectedDay" Type="int" Nullable="false" />
+          <Property Name="DirectorExpectedDate" Type="datetime" Nullable="false" />
+          <Property Name="SalesMaterialAvailable" Type="bit" Nullable="false" />
+          <Property Name="SalesMaterialAvailableDate" Type="datetime" Nullable="false" />
+          <Property Name="SalesPrepaymentType" Type="int" Nullable="false" />
+          <Property Name="SalesPaymentType" Type="int" Nullable="false" />
+          <Property Name="SalesPrice" Type="float" Nullable="false" />
+          <Property Name="SalesPriceDate" Type="datetime" Nullable="false" />
+          <Property Name="SalesComOfferNumber" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="SalesComOfferDate" Type="datetime" Nullable="false" />
+          <Property Name="AccSpecifNumber" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="AccSpecifDate" Type="datetime" Nullable="false" />
+          <Property Name="AccBillNumber" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="AccBillDate" Type="datetime" Nullable="false" />
+          <Property Name="AccPaymType" Type="int" Nullable="false" />
+          <Property Name="AccPaymDate" Type="datetime" Nullable="false" />
+          <Property Name="SalesMaterialOrderDate" Type="datetime" Nullable="false" />
+          <Property Name="SalesMaterialOrderReadyDate" Type="datetime" Nullable="false" />
+          <Property Name="DirectorOrderPlanedDate" Type="datetime" Nullable="false" />
+          <Property Name="OrderInManufactureDate" Type="datetime" Nullable="false" />
+          <Property Name="MaterialInManufactureDate" Type="datetime" Nullable="false" />
+          <Property Name="OrderInWorkDate" Type="datetime" Nullable="false" />
+          <Property Name="ManMadeDate" Type="datetime" Nullable="false" />
+          <Property Name="OTKProductGetDate" Type="datetime" Nullable="false" />
+          <Property Name="OTKProductDefectDate" Type="datetime" Nullable="false" />
+          <Property Name="OTKProductDefectInfo" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="OTKProductCorrectDate" Type="datetime" Nullable="false" />
+          <Property Name="ManProductApplyDate" Type="datetime" Nullable="false" />
+          <Property Name="ManLimitCreateDate" Type="datetime" Nullable="false" />
+          <Property Name="AccCustomerInformedDate" Type="datetime" Nullable="false" />
+          <Property Name="AccOrderPaidDate" Type="datetime" Nullable="false" />
+          <Property Name="AccDocumentsToSendDate" Type="datetime" Nullable="false" />
+          <Property Name="SendOrderDeliveryType" Type="int" Nullable="false" />
+          <Property Name="SendDeliveryDate" Type="datetime" Nullable="false" />
+          <Property Name="OrderReadyType" Type="int" Nullable="false" />
+          <Property Name="OrderHoldDay" Type="int" Nullable="false" />
+          <Property Name="OrderCorruptReason" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="OrderState" Type="int" Nullable="false" />
+          <Property Name="OrderGroupId" Type="uniqueidentifier" />
+          <Property Name="DateRec" Type="datetime" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="Version" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PostSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Version" Type="bigint" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SysTabSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DataBaseVersion" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserGroupSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Rights" Type="varbinary(max)" Nullable="false" />
+          <Property Name="Version" Type="bigint" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="EmployeePost">
+          <End Role="PostSet" Type="Self.PostSet" Multiplicity="0..1" />
+          <End Role="EmployeeSet" Type="Self.EmployeeSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PostSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeeSet">
+              <PropertyRef Name="PostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EmployeeUserGroup">
+          <End Role="UserGroupSet" Type="Self.UserGroupSet" Multiplicity="0..1" />
+          <End Role="EmployeeSet" Type="Self.EmployeeSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserGroupSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeeSet">
+              <PropertyRef Name="UserGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="LimitCardMaterialLimitCardFactMaterial">
+          <End Role="LimitCardMaterialSet" Type="Self.LimitCardMaterialSet" Multiplicity="1" />
+          <End Role="LimitCardFactMaterialSet" Type="Self.LimitCardFactMaterialSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LimitCardMaterialSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LimitCardFactMaterialSet">
+              <PropertyRef Name="LimitCardMaterialId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MaterialLimitCard">
+          <End Role="MaterialSet" Type="Self.MaterialSet" Multiplicity="1" />
+          <End Role="LimitCardMaterialSet" Type="Self.LimitCardMaterialSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MaterialSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LimitCardMaterialSet">
+              <PropertyRef Name="MaterialId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MaterialLimitCardFactMaterial">
+          <End Role="MaterialSet" Type="Self.MaterialSet" Multiplicity="1" />
+          <End Role="LimitCardFactMaterialSet" Type="Self.LimitCardFactMaterialSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MaterialSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LimitCardFactMaterialSet">
+              <PropertyRef Name="MaterialId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MetalFileOrder">
+          <End Role="OrderSet" Type="Self.OrderSet" Multiplicity="1" />
+          <End Role="MetalFileSet" Type="Self.MetalFileSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MetalFileSet">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="OperationLimitCardOperation">
+          <End Role="OperationSet" Type="Self.OperationSet" Multiplicity="1" />
+          <End Role="LimitCardOperationSet" Type="Self.LimitCardOperationSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OperationSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LimitCardOperationSet">
+              <PropertyRef Name="OperationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="OperationOrderOperation">
+          <End Role="OperationSet" Type="Self.OperationSet" Multiplicity="1" />
+          <End Role="OrderOperationSet" Type="Self.OrderOperationSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OperationSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderOperationSet">
+              <PropertyRef Name="OperationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="OrderGroupOrder">
+          <End Role="OrderGroupSet" Type="Self.OrderGroupSet" Multiplicity="0..1" />
+          <End Role="OrderSet" Type="Self.OrderSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderGroupSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderSet">
+              <PropertyRef Name="OrderGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="OrderLimitCard">
+          <End Role="OrderSet" Type="Self.OrderSet" Multiplicity="1" />
+          <End Role="LimitCardMaterialSet" Type="Self.LimitCardMaterialSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LimitCardMaterialSet">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="OrderLimitCardWork">
+          <End Role="OrderSet" Type="Self.OrderSet" Multiplicity="1" />
+          <End Role="LimitCardOperationSet" Type="Self.LimitCardOperationSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LimitCardOperationSet">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="OrderOperationEmployee">
+          <End Role="EmployeeSet" Type="Self.EmployeeSet" Multiplicity="0..1" />
+          <End Role="OrderOperationSet" Type="Self.OrderOperationSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderOperationSet">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="OrderOrderWork">
+          <End Role="OrderSet" Type="Self.OrderSet" Multiplicity="1" />
+          <End Role="OrderOperationSet" Type="Self.OrderOperationSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderOperationSet">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="СustomerOrder">
+          <End Role="CustomerSet" Type="Self.CustomerSet" Multiplicity="1" />
+          <End Role="OrderSet" Type="Self.OrderSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderSet">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MetalEDMStoreContainer">
+          <EntitySet Name="CustomerSet" EntityType="Self.CustomerSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeeSet" EntityType="Self.EmployeeSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LimitCardFactMaterialSet" EntityType="Self.LimitCardFactMaterialSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LimitCardMaterialSet" EntityType="Self.LimitCardMaterialSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LimitCardOperationSet" EntityType="Self.LimitCardOperationSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MaterialSet" EntityType="Self.MaterialSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MetalFileSet" EntityType="Self.MetalFileSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OperationSet" EntityType="Self.OperationSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderGroupSet" EntityType="Self.OrderGroupSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderOperationSet" EntityType="Self.OrderOperationSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderSet" EntityType="Self.OrderSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PostSet" EntityType="Self.PostSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SysTabSet" EntityType="Self.SysTabSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserGroupSet" EntityType="Self.UserGroupSet" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="EmployeePost" Association="Self.EmployeePost">
+            <End Role="PostSet" EntitySet="PostSet" />
+            <End Role="EmployeeSet" EntitySet="EmployeeSet" />
+          </AssociationSet>
+          <AssociationSet Name="EmployeeUserGroup" Association="Self.EmployeeUserGroup">
+            <End Role="UserGroupSet" EntitySet="UserGroupSet" />
+            <End Role="EmployeeSet" EntitySet="EmployeeSet" />
+          </AssociationSet>
+          <AssociationSet Name="LimitCardMaterialLimitCardFactMaterial" Association="Self.LimitCardMaterialLimitCardFactMaterial">
+            <End Role="LimitCardMaterialSet" EntitySet="LimitCardMaterialSet" />
+            <End Role="LimitCardFactMaterialSet" EntitySet="LimitCardFactMaterialSet" />
+          </AssociationSet>
+          <AssociationSet Name="MaterialLimitCard" Association="Self.MaterialLimitCard">
+            <End Role="MaterialSet" EntitySet="MaterialSet" />
+            <End Role="LimitCardMaterialSet" EntitySet="LimitCardMaterialSet" />
+          </AssociationSet>
+          <AssociationSet Name="MaterialLimitCardFactMaterial" Association="Self.MaterialLimitCardFactMaterial">
+            <End Role="MaterialSet" EntitySet="MaterialSet" />
+            <End Role="LimitCardFactMaterialSet" EntitySet="LimitCardFactMaterialSet" />
+          </AssociationSet>
+          <AssociationSet Name="MetalFileOrder" Association="Self.MetalFileOrder">
+            <End Role="OrderSet" EntitySet="OrderSet" />
+            <End Role="MetalFileSet" EntitySet="MetalFileSet" />
+          </AssociationSet>
+          <AssociationSet Name="OperationLimitCardOperation" Association="Self.OperationLimitCardOperation">
+            <End Role="OperationSet" EntitySet="OperationSet" />
+            <End Role="LimitCardOperationSet" EntitySet="LimitCardOperationSet" />
+          </AssociationSet>
+          <AssociationSet Name="OperationOrderOperation" Association="Self.OperationOrderOperation">
+            <End Role="OperationSet" EntitySet="OperationSet" />
+            <End Role="OrderOperationSet" EntitySet="OrderOperationSet" />
+          </AssociationSet>
+          <AssociationSet Name="OrderGroupOrder" Association="Self.OrderGroupOrder">
+            <End Role="OrderGroupSet" EntitySet="OrderGroupSet" />
+            <End Role="OrderSet" EntitySet="OrderSet" />
+          </AssociationSet>
+          <AssociationSet Name="OrderLimitCard" Association="Self.OrderLimitCard">
+            <End Role="OrderSet" EntitySet="OrderSet" />
+            <End Role="LimitCardMaterialSet" EntitySet="LimitCardMaterialSet" />
+          </AssociationSet>
+          <AssociationSet Name="OrderLimitCardWork" Association="Self.OrderLimitCardWork">
+            <End Role="OrderSet" EntitySet="OrderSet" />
+            <End Role="LimitCardOperationSet" EntitySet="LimitCardOperationSet" />
+          </AssociationSet>
+          <AssociationSet Name="OrderOperationEmployee" Association="Self.OrderOperationEmployee">
+            <End Role="EmployeeSet" EntitySet="EmployeeSet" />
+            <End Role="OrderOperationSet" EntitySet="OrderOperationSet" />
+          </AssociationSet>
+          <AssociationSet Name="OrderOrderWork" Association="Self.OrderOrderWork">
+            <End Role="OrderSet" EntitySet="OrderSet" />
+            <End Role="OrderOperationSet" EntitySet="OrderOperationSet" />
+          </AssociationSet>
+          <AssociationSet Name="СustomerOrder" Association="Self.СustomerOrder">
+            <End Role="CustomerSet" EntitySet="CustomerSet" />
+            <End Role="OrderSet" EntitySet="OrderSet" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="MetalEDM" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="MetalEDMContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="OrderSet" EntityType="MetalEDM.Order" />
+          <EntitySet Name="CustomerSet" EntityType="MetalEDM.Customer" />
+          <EntitySet Name="EmployeeSet" EntityType="MetalEDM.Employee" />
+          <EntitySet Name="PostSet" EntityType="MetalEDM.Post" />
+          <EntitySet Name="OperationSet" EntityType="MetalEDM.Operation" />
+          <EntitySet Name="MaterialSet" EntityType="MetalEDM.Material" />
+          <EntitySet Name="OrderGroupSet" EntityType="MetalEDM.OrderGroup" />
+          <AssociationSet Name="СustomerOrder" Association="MetalEDM.СustomerOrder">
+            <End Role="Сustomer" EntitySet="CustomerSet" />
+            <End Role="Order" EntitySet="OrderSet" />
+          </AssociationSet>
+          <AssociationSet Name="OrderGroupOrder" Association="MetalEDM.OrderGroupOrder">
+            <End Role="OrderGroup" EntitySet="OrderGroupSet" />
+            <End Role="Order" EntitySet="OrderSet" />
+          </AssociationSet>
+          <EntitySet Name="OrderOperationSet" EntityType="MetalEDM.OrderOperation" />
+          <AssociationSet Name="OrderOrderWork" Association="MetalEDM.OrderOrderWork">
+            <End Role="Order" EntitySet="OrderSet" />
+            <End Role="OrderWork" EntitySet="OrderOperationSet" />
+          </AssociationSet>
+          <AssociationSet Name="OperationOrderOperation" Association="MetalEDM.OperationOrderOperation">
+            <End Role="Operation" EntitySet="OperationSet" />
+            <End Role="OrderOperation" EntitySet="OrderOperationSet" />
+          </AssociationSet>
+          <EntitySet Name="LimitCardMaterialSet" EntityType="MetalEDM.LimitCardMaterial" />
+          <AssociationSet Name="OrderLimitCard" Association="MetalEDM.OrderLimitCard">
+            <End Role="Order" EntitySet="OrderSet" />
+            <End Role="LimitCard" EntitySet="LimitCardMaterialSet" />
+          </AssociationSet>
+          <AssociationSet Name="MaterialLimitCard" Association="MetalEDM.MaterialLimitCard">
+            <End Role="Material" EntitySet="MaterialSet" />
+            <End Role="LimitCard" EntitySet="LimitCardMaterialSet" />
+          </AssociationSet>
+          <EntitySet Name="LimitCardOperationSet" EntityType="MetalEDM.LimitCardOperation" />
+          <AssociationSet Name="OrderLimitCardWork" Association="MetalEDM.OrderLimitCardWork">
+            <End Role="Order" EntitySet="OrderSet" />
+            <End Role="LimitCardWork" EntitySet="LimitCardOperationSet" />
+          </AssociationSet>
+          <AssociationSet Name="OperationLimitCardOperation" Association="MetalEDM.OperationLimitCardOperation">
+            <End Role="Operation" EntitySet="OperationSet" />
+            <End Role="LimitCardOperation" EntitySet="LimitCardOperationSet" />
+          </AssociationSet>
+          <EntitySet Name="MetalFileSet" EntityType="MetalEDM.MetalFile" />
+          <AssociationSet Name="EmployeePost" Association="MetalEDM.EmployeePost">
+            <End Role="Employee" EntitySet="EmployeeSet" />
+            <End Role="Post" EntitySet="PostSet" />
+          </AssociationSet>
+          <EntitySet Name="LimitCardFactMaterialSet" EntityType="MetalEDM.LimitCardFactMaterial" />
+          <AssociationSet Name="LimitCardMaterialLimitCardFactMaterial" Association="MetalEDM.LimitCardMaterialLimitCardFactMaterial">
+            <End Role="LimitCardMaterial" EntitySet="LimitCardMaterialSet" />
+            <End Role="LimitCardFactMaterial" EntitySet="LimitCardFactMaterialSet" />
+          </AssociationSet>
+          <AssociationSet Name="MaterialLimitCardFactMaterial" Association="MetalEDM.MaterialLimitCardFactMaterial">
+            <End Role="Material" EntitySet="MaterialSet" />
+            <End Role="LimitCardFactMaterial" EntitySet="LimitCardFactMaterialSet" />
+          </AssociationSet>
+          <AssociationSet Name="OrderOperationEmployee" Association="MetalEDM.OrderOperationEmployee">
+            <End Role="OrderOperation" EntitySet="OrderOperationSet" />
+            <End Role="Employee" EntitySet="EmployeeSet" />
+          </AssociationSet>
+          <EntitySet Name="UserGroupSet" EntityType="MetalEDM.UserGroup" />
+          <EntitySet Name="SysTabSet" EntityType="MetalEDM.SysTab" />
+          <AssociationSet Name="MetalFileOrder" Association="MetalEDM.MetalFileOrder">
+            <End Role="MetalFile" EntitySet="MetalFileSet" />
+            <End Role="Order" EntitySet="OrderSet" />
+          </AssociationSet>
+          <AssociationSet Name="EmployeeUserGroup" Association="MetalEDM.EmployeeUserGroup">
+            <End Role="Employee" EntitySet="EmployeeSet" />
+            <End Role="UserGroup" EntitySet="UserGroupSet" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="Order">
+          <Documentation>
+            <Summary>Заказ</Summary>
+          </Documentation>
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" >
+            <Documentation>
+              <Summary>Уникальный идентификатор версии заказа</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="Number" Type="Int32" Nullable="false" >
+            <Documentation>
+              <Summary>Номер заказа</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3">
+            <Documentation>
+              <Summary>Дата заказа</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false">
+            <Documentation>
+              <Summary>Наименование</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="Count" Type="Int32" Nullable="false">
+            <Documentation>
+              <Summary>Количество</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="CustomerId" Type="Guid" Nullable="false">
+            <Documentation>
+              <Summary>Идентификатор заказчика</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="ReadyDate" Type="DateTime" Nullable="false" Precision="3" >
+            <Documentation>
+              <Summary>Срок изготовления до</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="AcceptedDate" Type="DateTime" Nullable="false" Precision="3">
+            <Documentation>
+              <Summary>Заказ принят</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="DrawingNumber" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false">
+            <Documentation>
+              <Summary>Чертёж</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="DrawingState" Type="MetalEDM.DrawingType" Nullable="false">
+            <Documentation>
+              <Summary>Состояние чертежа</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="IsCustomerMaterial" Type="Boolean" Nullable="false">
+            <Documentation>
+              <LongDescription>Материалы заказчика</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="CustomerMaterial" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false">
+            <Documentation>
+              <Summary>Материалы заказчика</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="CustomerReadyDate" Type="DateTime" Nullable="false" Precision="3">
+            <Documentation>
+              <Summary>Желаемый срок изготовления</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="MaterialAgreed" Type="DateTime" Nullable="false" Precision="3" >
+            <Documentation>
+              <Summary>Дата и время согласования материала с заказчиком и снабжением</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="TechCalcPrice" Type="Double" Nullable="false" >
+            <Documentation>
+              <Summary>Расчетная цена</Summary>
+            </Documentation>
+          </Property>
+          <NavigationProperty Name="Customer" Relationship="MetalEDM.СustomerOrder" FromRole="Order" ToRole="Сustomer" >
+            <Documentation>
+              <Summary>Заказчик</Summary>
+            </Documentation>
+          </NavigationProperty>
+          <Property Name="TechCalcHour" Type="Int32" Nullable="false" >
+            <Documentation>
+              <Summary>Расчетное время изготовления</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="TechCalcMinutes" Type="Int32" Nullable="false" >
+            <Documentation>
+              <Summary>Расчетное время изготовления</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="TechCalcPriceDate" Type="DateTime" Nullable="false" Precision="3">
+            <Documentation>
+              <Summary>Дата и время расчтеа цены</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="TechCalcMultiplier" Type="Double" Nullable="false" DefaultValue="1">
+            <Documentation>
+              <Summary>Коэффициент работ лимитки</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="TechMaterialReqDate" Type="DateTime" Nullable="false" Precision="3">
+            <Documentation>
+              <Summary>Заявка на основные и вспомогательные материалы приложена</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="DirectorExpectedPrice" Type="Double" Nullable="false">
+            <Documentation>
+              <Summary>Предлагаемая цена</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="DirectorExpectedDay" Type="Int32" Nullable="false">
+            <Documentation>
+              <Summary>Срок изготовления дней</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="DirectorExpectedDate" Type="DateTime" Nullable="false" Precision="3">
+            <Documentation>
+              <Summary>Примерный срок изготовления</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="SalesMaterialAvailable" Type="Boolean" Nullable="false">
+            <Documentation>
+              <Summary>Материалы в наличии</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="SalesMaterialAvailableDate" Type="DateTime" Nullable="false" Precision="3">
+            <Documentation>
+              <Summary>Дата и время отметки доступности материала</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="SalesPrepaymentType" Type="MetalEDM.PaymentType" Nullable="false">
+            <Documentation>
+              <Summary>Предоплата заказа</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="SalesPaymentType" Type="MetalEDM.PaymentType" Nullable="false">
+            <Documentation>
+              <Summary>Заказ отгрузить при оплате</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="SalesPrice" Type="Double" Nullable="false" >
+            <Documentation>
+              <Summary>Отпускная цена</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="SalesPriceDate" Type="DateTime" Nullable="false" Precision="3">
+            <Documentation>
+              <Summary>Дата и время выставления цены</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="SalesComOfferNumber" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false">
+            <Documentation>
+              <Summary>Номер комерческого предложения</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="SalesComOfferDate" Type="DateTime" Nullable="false" Precision="3">
+            <Documentation>
+              <Summary>Дата и время выставления комерческого предложения</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="AccSpecifNumber" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false">
+            <Documentation>
+              <Summary>Номер спецификации</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="AccSpecifDate" Type="DateTime" Nullable="false" Precision="3">
+            <Documentation>
+              <Summary>Дата спецификации</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="AccBillNumber" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false">
+            <Documentation>
+              <Summary>Номер выставленного счета</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="AccBillDate" Type="DateTime" Nullable="false" Precision="3">
+            <Documentation>
+              <Summary>Дата и время выставленного счета</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="AccPaymType" Type="MetalEDM.PaymentType" Nullable="false">
+            <Documentation>
+              <Summary>Заказ оплачен на..</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="AccPaymDate" Type="DateTime" Nullable="false" Precision="3">
+            <Documentation>
+              <Summary>Дата и время оплаты или отказа по заказу</Summary>
+            </Documentation>
+          </Property>
+          <NavigationProperty Name="OrderGroup" Relationship="MetalEDM.OrderGroupOrder" FromRole="Order" ToRole="OrderGroup" >
+            <Documentation>
+              <Summary>Группа заказов</Summary>
+            </Documentation>
+          </NavigationProperty>
+          <Property Name="SalesMaterialOrderDate" Type="DateTime" Nullable="false" Precision="3">
+            <Documentation>
+              <Summary>Дата и время заказа материалов</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="SalesMaterialOrderReadyDate" Type="DateTime" Nullable="false" Precision="3">
+            <Documentation>
+              <Summary>Срок поставки материалов</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="DirectorOrderPlanedDate" Type="DateTime" Nullable="false" Precision="3">
+            <Documentation>
+              <Summary>Дата и время поставки заказа в план</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="OrderInManufactureDate" Type="DateTime" Nullable="false" Precision="3" >
+            <Documentation>
+              <Summary>Дата и время поступления заказа в производство</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="MaterialInManufactureDate" Type="DateTime" Nullable="false" Precision="3">
+            <Documentation>
+              <Summary>Материалы получены в производство</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="OrderInWorkDate" Type="DateTime" Nullable="false" Precision="3">
+            <Documentation>
+              <Summary>Заказ запущен в работу</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="ManMadeDate" Type="DateTime" Nullable="false" Precision="3">
+            <Documentation>
+              <Summary>Дата и время изготовления</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="OTKProductGetDate" Type="DateTime" Nullable="false" Precision="3" >
+            <Documentation>
+              <Summary>Дата поступления в ОТК</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="OTKProductDefectDate" Type="DateTime" Nullable="false" Precision="3" >
+            <Documentation>
+              <Summary>Дата и время возвращения изделия на доработку из-за брака</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="OTKProductDefectInfo" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false">
+            <Documentation>
+              <Summary>Описание дефекта</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="OTKProductCorrectDate" Type="DateTime" Nullable="false" Precision="3">
+            <Documentation>
+              <Summary>Дата и время принятия изделия в ОТК</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="ManProductApplyDate" Type="DateTime" Nullable="false" Precision="3">
+            <Documentation>
+              <Summary>Дата и время принятия произ. участком</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="ManLimitCreateDate" Type="DateTime" Nullable="false" Precision="3">
+            <Documentation>
+              <Summary>Лимитка заполнена, передано в бухгалтерию</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="AccCustomerInformedDate" Type="DateTime" Nullable="false" Precision="3">
+            <Documentation>
+              <Summary>Дата и время информирования заказчика о готовности</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="AccOrderPaidDate" Type="DateTime" Nullable="false" Precision="3">
+            <Documentation>
+              <Summary>Дата и время оплаты заказа</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="AccDocumentsToSendDate" Type="DateTime" Nullable="false" Precision="3" >
+            <Documentation>
+              <LongDescription>Документы оформлены и переданы для отгрузки</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="SendOrderDeliveryType" Type="MetalEDM.DeliveryType" Nullable="false" />
+          <Property Name="SendDeliveryDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="OrderReadyType" Type="MetalEDM.OrderReadyType" Nullable="false">
+            <Documentation>
+              <Summary>Тип выполнения заказа</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="OrderHoldDay" Type="Int32" Nullable="false" >
+            <Documentation>
+              <Summary>Количество дней на который задержан заказ</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="OrderCorruptReason" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="OrderState" Type="MetalEDM.OrderState" Nullable="false">
+            <Documentation>
+              <Summary>Состояние заказа</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="OrderGroupId" Type="Guid" Nullable="true" >
+            <Documentation>
+              <Summary>Идентификатор группы заказов</Summary>
+            </Documentation>
+          </Property>
+          <NavigationProperty Name="OrderWork" Relationship="MetalEDM.OrderOrderWork" FromRole="Order" ToRole="OrderWork" >
+            <Documentation>
+              <Summary>Операции</Summary>
+            </Documentation>
+          </NavigationProperty>
+          <Property Name="DateRec" Type="DateTime" Nullable="false" Precision="3" >
+            <Documentation>
+              <Summary>Дата записи</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="Deleted" Type="Boolean" Nullable="false" >
+            <Documentation>
+              <Summary>Элемент удален</Summary>
+            </Documentation>
+          </Property>
+          <NavigationProperty Name="LimitCard" Relationship="MetalEDM.OrderLimitCard" FromRole="Order" ToRole="LimitCard" />
+          <NavigationProperty Name="LimitCardWork" Relationship="MetalEDM.OrderLimitCardWork" FromRole="Order" ToRole="LimitCardWork" />
+          <NavigationProperty Name="OrderDrawings" Relationship="MetalEDM.MetalFileOrder" FromRole="Order" ToRole="MetalFile" />
+          <Property Name="Version" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Documentation>
+            <Summary>Заказчик</Summary>
+          </Documentation>
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <NavigationProperty Name="Order" Relationship="MetalEDM.СustomerOrder" FromRole="Сustomer" ToRole="Order" >
+            <Documentation>
+              <Summary>Заказы</Summary>
+            </Documentation>
+          </NavigationProperty>
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" >
+            <Documentation>
+              <Summary>Наименование</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="Employee" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" >
+            <Documentation>
+              <Summary>Сотрудник заказчика</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="Phone" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" >
+            <Documentation>
+              <Summary>Номер тел.</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="Mail" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" >
+            <Documentation>
+              <Summary>Эл. почта</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="Fax" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" >
+            <Documentation>
+              <Summary>Факс</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="Deleted" Type="Boolean" Nullable="false" >
+            <Documentation>
+              <Summary>Элемент удален</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="Version" Type="Int64" Nullable="false" DefaultValue="0" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Documentation>
+            <Summary>Сотрудник</Summary>
+          </Documentation>
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" >
+            <Documentation>
+              <Summary>Имя</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="Secondname" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" >
+            <Documentation>
+              <Summary>Фамилия</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="Patronymic" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" >
+            <Documentation>
+              <Summary>Отчество</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="PostId" Type="Guid" Nullable="true" />
+          <Property Name="UseForLogin" Type="Boolean" Nullable="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" >
+            <Documentation>
+              <Summary>Элемент удален</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="Version" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Post" Relationship="MetalEDM.EmployeePost" FromRole="Employee" ToRole="Post" />
+          <NavigationProperty Name="UserGroup" Relationship="MetalEDM.EmployeeUserGroup" FromRole="Employee" ToRole="UserGroup" />
+          <Property Name="UserGroupId" Type="Guid" Nullable="true" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Documentation>
+            <Summary>Должность</Summary>
+          </Documentation>
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" >
+            <Documentation>
+              <Summary>Наименование</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="Version" Type="Int64" Nullable="false" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" >
+            <Documentation>
+              <Summary>Элемент удален</Summary>
+            </Documentation>
+          </Property>
+          <NavigationProperty Name="Employee" Relationship="MetalEDM.EmployeePost" FromRole="Post" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Operation">
+          <Documentation>
+            <Summary>Операция</Summary>
+          </Documentation>
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" >
+            <Documentation>
+              <Summary>Наименование</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="Deleted" Type="Boolean" Nullable="false" >
+            <Documentation>
+              <Summary>Элемент удален</Summary>
+            </Documentation>
+          </Property>
+          <NavigationProperty Name="OrderOperation" Relationship="MetalEDM.OperationOrderOperation" FromRole="Operation" ToRole="OrderOperation" >
+            <Documentation>
+              <Summary>Операции в заказе</Summary>
+            </Documentation>
+          </NavigationProperty>
+          <NavigationProperty Name="LimitCardOperation" Relationship="MetalEDM.OperationLimitCardOperation" FromRole="Operation" ToRole="LimitCardOperation" />
+          <Property Name="Version" Type="Int64" Nullable="false" DefaultValue="0" />
+        </EntityType>
+        <EntityType Name="Material">
+          <Documentation>
+            <Summary>Материал</Summary>
+          </Documentation>
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" >
+            <Documentation>
+              <Summary>Наименование</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="Deleted" Type="Boolean" Nullable="false" >
+            <Documentation>
+              <Summary>Элемент удален</Summary>
+            </Documentation>
+          </Property>
+          <NavigationProperty Name="LimitCard" Relationship="MetalEDM.MaterialLimitCard" FromRole="Material" ToRole="LimitCard" />
+          <Property Name="Version" Type="Int64" Nullable="false" DefaultValue="0" />
+        </EntityType>
+        <EntityType Name="OrderGroup">
+          <Documentation>
+            <Summary>Группа заказов</Summary>
+          </Documentation>
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" >
+            <Documentation>
+              <Summary>Наименование</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="Deleted" Type="Boolean" Nullable="false" >
+            <Documentation>
+              <Summary>Элемент удален</Summary>
+            </Documentation>
+          </Property>
+          <NavigationProperty Name="Order" Relationship="MetalEDM.OrderGroupOrder" FromRole="OrderGroup" ToRole="Order" >
+            <Documentation>
+              <Summary>Заказы</Summary>
+            </Documentation>
+          </NavigationProperty>
+          <Property Name="Version" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EnumType Name="OrderState" cg:ExternalTypeName="MetalTransport.ModelEx.OrderState">
+          </EnumType>
+        <Association Name="СustomerOrder">
+          <End Type="MetalEDM.Customer" Role="Сustomer" Multiplicity="1" />
+          <End Type="MetalEDM.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Сustomer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="OrderGroupOrder">
+          <End Type="MetalEDM.OrderGroup" Role="OrderGroup" Multiplicity="0..1" />
+          <End Type="MetalEDM.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="OrderGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="OrderOperation">
+          <Documentation>
+            <Summary>Табл. операций заказа</Summary>
+          </Documentation>
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <NavigationProperty Name="Order" Relationship="MetalEDM.OrderOrderWork" FromRole="OrderWork" ToRole="Order" >
+            <Documentation>
+              <Summary>Заказ</Summary>
+            </Documentation>
+          </NavigationProperty>
+          <Property Name="Index" Type="Int32" Nullable="false" >
+            <Documentation>
+              <Summary>Порядковый номер</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="OrderId" Type="Guid" Nullable="false" >
+            <Documentation>
+              <Summary>Идентификатор заказа</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="OperationId" Type="Guid" Nullable="false" >
+            <Documentation>
+              <Summary>Идентификатор операции</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="Count" Type="Int32" Nullable="false" >
+            <Documentation>
+              <Summary>Количество</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" >
+            <Documentation>
+              <Summary>Дата начала</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" >
+            <Documentation>
+              <Summary>Дата окончания</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="Comment" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" >
+            <Documentation>
+              <Summary>Коментарий</Summary>
+            </Documentation>
+          </Property>
+          <NavigationProperty Name="Operation" Relationship="MetalEDM.OperationOrderOperation" FromRole="OrderOperation" ToRole="Operation" >
+            <Documentation>
+              <Summary>Операция</Summary>
+            </Documentation>
+          </NavigationProperty>
+          <NavigationProperty Name="Employee" Relationship="MetalEDM.OrderOperationEmployee" FromRole="OrderOperation" ToRole="Employee" />
+          <Property Name="EmployeeId" Type="Guid" Nullable="true" />
+        </EntityType>
+        <Association Name="OrderOrderWork">
+          <End Type="MetalEDM.Order" Role="Order" Multiplicity="1" />
+          <End Type="MetalEDM.OrderOperation" Role="OrderWork" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderWork">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="OperationOrderOperation">
+          <End Type="MetalEDM.Operation" Role="Operation" Multiplicity="1" />
+          <End Type="MetalEDM.OrderOperation" Role="OrderOperation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Operation">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderOperation">
+              <PropertyRef Name="OperationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EnumType Name="DeliveryType" cg:ExternalTypeName="MetalTransport.ModelEx.DeliveryType">
+          </EnumType>
+        <EnumType Name="OrderReadyType" cg:ExternalTypeName="MetalTransport.ModelEx.OrderReadyType">
+          </EnumType>
+        <EnumType Name="PaymentType" cg:ExternalTypeName="MetalTransport.ModelEx.PaymentType" />
+        <EnumType Name="DrawingType" cg:ExternalTypeName="MetalTransport.ModelEx.DrawingType" />
+        <EntityType Name="LimitCardMaterial">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <NavigationProperty Name="Order" Relationship="MetalEDM.OrderLimitCard" FromRole="LimitCard" ToRole="Order" />
+          <Property Name="Index" Type="Int32" Nullable="false">
+            <Documentation>
+              <Summary>Позиция</Summary>
+              <LongDescription>Позиция елемента в списке формы</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="OrderId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Material" Relationship="MetalEDM.MaterialLimitCard" FromRole="LimitCard" ToRole="Material" />
+          <Property Name="MaterialId" Type="Guid" Nullable="false" />
+          <Property Name="Units" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="UsagePerUnits" Type="Double" Nullable="false" />
+          <Property Name="UsagePerOrder" Type="Double" Nullable="false" />
+          <Property Name="Multiplicity" Type="Double" Nullable="false" />
+          <NavigationProperty Name="FactMaterials" Relationship="MetalEDM.LimitCardMaterialLimitCardFactMaterial" FromRole="LimitCardMaterial" ToRole="LimitCardFactMaterial" />
+          <Property Name="Price" Type="Double" Nullable="false" />
+        </EntityType>
+        <Association Name="OrderLimitCard">
+          <End Type="MetalEDM.Order" Role="Order" Multiplicity="1" />
+          <End Type="MetalEDM.LimitCardMaterial" Role="LimitCard" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LimitCard">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MaterialLimitCard">
+          <End Type="MetalEDM.Material" Role="Material" Multiplicity="1" />
+          <End Type="MetalEDM.LimitCardMaterial" Role="LimitCard" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Material">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LimitCard">
+              <PropertyRef Name="MaterialId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="LimitCardOperation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <NavigationProperty Name="Order" Relationship="MetalEDM.OrderLimitCardWork" FromRole="LimitCardWork" ToRole="Order" />
+          <Property Name="Index" Type="Int32" Nullable="false">
+            <Documentation>
+              <Summary>Позиция</Summary>
+              <LongDescription>Позиция елемента в списке формы</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="OrderId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Operation" Relationship="MetalEDM.OperationLimitCardOperation" FromRole="LimitCardOperation" ToRole="Operation" />
+          <Property Name="OperationId" Type="Guid" Nullable="false" />
+          <Property Name="ElapsedHours" Type="Int16" Nullable="false" />
+          <Property Name="ElapsedMinutes" Type="Int16" Nullable="false" />
+          <Property Name="PricePerHour" Type="Double" Nullable="false" />
+        </EntityType>
+        <Association Name="OrderLimitCardWork">
+          <End Type="MetalEDM.Order" Role="Order" Multiplicity="1" />
+          <End Type="MetalEDM.LimitCardOperation" Role="LimitCardWork" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LimitCardWork">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="OperationLimitCardOperation">
+          <End Type="MetalEDM.Operation" Role="Operation" Multiplicity="1" />
+          <End Type="MetalEDM.LimitCardOperation" Role="LimitCardOperation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Operation">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LimitCardOperation">
+              <PropertyRef Name="OperationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="MetalFile">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="Path" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Index" Type="Int32" Nullable="false" />
+          <Property Name="ChunkCount" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Order" Relationship="MetalEDM.MetalFileOrder" FromRole="MetalFile" ToRole="Order" />
+          <Property Name="OrderId" Type="Guid" Nullable="false" />
+        </EntityType>
+        <Association Name="EmployeePost">
+          <End Type="MetalEDM.Employee" Role="Employee" Multiplicity="*" />
+          <End Type="MetalEDM.Post" Role="Post" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="PostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="LimitCardFactMaterial">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <NavigationProperty Name="LimitCardMaterial" Relationship="MetalEDM.LimitCardMaterialLimitCardFactMaterial" FromRole="LimitCardFactMaterial" ToRole="LimitCardMaterial" />
+          <Property Name="LimitCardMaterialId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Material" Relationship="MetalEDM.MaterialLimitCardFactMaterial" FromRole="LimitCardFactMaterial" ToRole="Material" />
+          <Property Name="MaterialId" Type="Guid" Nullable="false" />
+          <Property Name="Count" Type="Double" Nullable="false" />
+          <Property Name="Price" Type="Double" Nullable="false" />
+        </EntityType>
+        <Association Name="LimitCardMaterialLimitCardFactMaterial">
+          <End Type="MetalEDM.LimitCardMaterial" Role="LimitCardMaterial" Multiplicity="1" />
+          <End Type="MetalEDM.LimitCardFactMaterial" Role="LimitCardFactMaterial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LimitCardMaterial">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LimitCardFactMaterial">
+              <PropertyRef Name="LimitCardMaterialId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MaterialLimitCardFactMaterial">
+          <End Type="MetalEDM.Material" Role="Material" Multiplicity="1" />
+          <End Type="MetalEDM.LimitCardFactMaterial" Role="LimitCardFactMaterial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Material">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LimitCardFactMaterial">
+              <PropertyRef Name="MaterialId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="OrderOperationEmployee">
+          <End Type="MetalEDM.OrderOperation" Role="OrderOperation" Multiplicity="*" />
+          <End Type="MetalEDM.Employee" Role="Employee" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderOperation">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="UserGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" >
+            <Documentation>
+              <LongDescription>Наименование</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="Rights" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" >
+            <Documentation>
+              <LongDescription>Права</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="Version" Type="Int64" Nullable="false" >
+            <Documentation>
+              <LongDescription>Версия</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="MetalEDM.EmployeeUserGroup" FromRole="UserGroup" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="SysTab" >
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="DataBaseVersion" Type="Int32" Nullable="false" DefaultValue="0" />
+        </EntityType>
+        <Association Name="MetalFileOrder">
+          <End Type="MetalEDM.MetalFile" Role="MetalFile" Multiplicity="*" />
+          <End Type="MetalEDM.Order" Role="Order" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MetalFile">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EmployeeUserGroup">
+          <End Type="MetalEDM.Employee" Role="Employee" Multiplicity="*" />
+          <End Type="MetalEDM.UserGroup" Role="UserGroup" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="UserGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="UserGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MetalEDMStoreContainer" CdmEntityContainer="MetalEDMContainer">
+    <EntitySetMapping Name="OrderSet">
+      <EntityTypeMapping TypeName="IsTypeOf(MetalEDM.Order)">
+        <MappingFragment StoreEntitySet="OrderSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Count" ColumnName="Count" />
+          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+          <ScalarProperty Name="ReadyDate" ColumnName="ReadyDate" />
+          <ScalarProperty Name="AcceptedDate" ColumnName="AcceptedDate" />
+          <ScalarProperty Name="DrawingNumber" ColumnName="DrawingNumber" />
+          <ScalarProperty Name="DrawingState" ColumnName="DrawingState" />
+          <ScalarProperty Name="IsCustomerMaterial" ColumnName="IsCustomerMaterial" />
+          <ScalarProperty Name="CustomerMaterial" ColumnName="CustomerMaterial" />
+          <ScalarProperty Name="CustomerReadyDate" ColumnName="CustomerReadyDate" />
+          <ScalarProperty Name="MaterialAgreed" ColumnName="MaterialAgreed" />
+          <ScalarProperty Name="TechCalcPrice" ColumnName="TechCalcPrice" />
+          <ScalarProperty Name="TechCalcHour" ColumnName="TechCalcHour" />
+          <ScalarProperty Name="TechCalcMinutes" ColumnName="TechCalcMinutes" />
+          <ScalarProperty Name="TechCalcPriceDate" ColumnName="TechCalcPriceDate" />
+          <ScalarProperty Name="TechCalcMultiplier" ColumnName="TechCalcMultiplier" />
+          <ScalarProperty Name="TechMaterialReqDate" ColumnName="TechMaterialReqDate" />
+          <ScalarProperty Name="DirectorExpectedPrice" ColumnName="DirectorExpectedPrice" />
+          <ScalarProperty Name="DirectorExpectedDay" ColumnName="DirectorExpectedDay" />
+          <ScalarProperty Name="DirectorExpectedDate" ColumnName="DirectorExpectedDate" />
+          <ScalarProperty Name="SalesMaterialAvailable" ColumnName="SalesMaterialAvailable" />
+          <ScalarProperty Name="SalesMaterialAvailableDate" ColumnName="SalesMaterialAvailableDate" />
+          <ScalarProperty Name="SalesPrepaymentType" ColumnName="SalesPrepaymentType" />
+          <ScalarProperty Name="SalesPaymentType" ColumnName="SalesPaymentType" />
+          <ScalarProperty Name="SalesPrice" ColumnName="SalesPrice" />
+          <ScalarProperty Name="SalesPriceDate" ColumnName="SalesPriceDate" />
+          <ScalarProperty Name="SalesComOfferNumber" ColumnName="SalesComOfferNumber" />
+          <ScalarProperty Name="SalesComOfferDate" ColumnName="SalesComOfferDate" />
+          <ScalarProperty Name="AccSpecifNumber" ColumnName="AccSpecifNumber" />
+          <ScalarProperty Name="AccSpecifDate" ColumnName="AccSpecifDate" />
+          <ScalarProperty Name="AccBillNumber" ColumnName="AccBillNumber" />
+          <ScalarProperty Name="AccBillDate" ColumnName="AccBillDate" />
+          <ScalarProperty Name="AccPaymType" ColumnName="AccPaymType" />
+          <ScalarProperty Name="AccPaymDate" ColumnName="AccPaymDate" />
+          <ScalarProperty Name="SalesMaterialOrderDate" ColumnName="SalesMaterialOrderDate" />
+          <ScalarProperty Name="SalesMaterialOrderReadyDate" ColumnName="SalesMaterialOrderReadyDate" />
+          <ScalarProperty Name="DirectorOrderPlanedDate" ColumnName="DirectorOrderPlanedDate" />
+          <ScalarProperty Name="OrderInManufactureDate" ColumnName="OrderInManufactureDate" />
+          <ScalarProperty Name="MaterialInManufactureDate" ColumnName="MaterialInManufactureDate" />
+          <ScalarProperty Name="OrderInWorkDate" ColumnName="OrderInWorkDate" />
+          <ScalarProperty Name="ManMadeDate" ColumnName="ManMadeDate" />
+          <ScalarProperty Name="OTKProductGetDate" ColumnName="OTKProductGetDate" />
+          <ScalarProperty Name="OTKProductDefectDate" ColumnName="OTKProductDefectDate" />
+          <ScalarProperty Name="OTKProductDefectInfo" ColumnName="OTKProductDefectInfo" />
+          <ScalarProperty Name="OTKProductCorrectDate" ColumnName="OTKProductCorrectDate" />
+          <ScalarProperty Name="ManProductApplyDate" ColumnName="ManProductApplyDate" />
+          <ScalarProperty Name="ManLimitCreateDate" ColumnName="ManLimitCreateDate" />
+          <ScalarProperty Name="AccCustomerInformedDate" ColumnName="AccCustomerInformedDate" />
+          <ScalarProperty Name="AccOrderPaidDate" ColumnName="AccOrderPaidDate" />
+          <ScalarProperty Name="AccDocumentsToSendDate" ColumnName="AccDocumentsToSendDate" />
+          <ScalarProperty Name="SendOrderDeliveryType" ColumnName="SendOrderDeliveryType" />
+          <ScalarProperty Name="SendDeliveryDate" ColumnName="SendDeliveryDate" />
+          <ScalarProperty Name="OrderReadyType" ColumnName="OrderReadyType" />
+          <ScalarProperty Name="OrderHoldDay" ColumnName="OrderHoldDay" />
+          <ScalarProperty Name="OrderCorruptReason" ColumnName="OrderCorruptReason" />
+          <ScalarProperty Name="OrderState" ColumnName="OrderState" />
+          <ScalarProperty Name="OrderGroupId" ColumnName="OrderGroupId" />
+          <ScalarProperty Name="DateRec" ColumnName="DateRec" />
+          <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+          <ScalarProperty Name="Version" ColumnName="Version" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CustomerSet">
+      <EntityTypeMapping TypeName="IsTypeOf(MetalEDM.Customer)">
+        <MappingFragment StoreEntitySet="CustomerSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Employee" ColumnName="Employee" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Mail" ColumnName="Mail" />
+          <ScalarProperty Name="Fax" ColumnName="Fax" />
+          <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+          <ScalarProperty Name="Version" ColumnName="Version" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EmployeeSet">
+      <EntityTypeMapping TypeName="IsTypeOf(MetalEDM.Employee)">
+        <MappingFragment StoreEntitySet="EmployeeSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Secondname" ColumnName="Secondname" />
+          <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+          <ScalarProperty Name="PostId" ColumnName="PostId" />
+          <ScalarProperty Name="UseForLogin" ColumnName="UseForLogin" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+          <ScalarProperty Name="Version" ColumnName="Version" />
+          <ScalarProperty Name="UserGroupId" ColumnName="UserGroupId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PostSet">
+      <EntityTypeMapping TypeName="IsTypeOf(MetalEDM.Post)">
+        <MappingFragment StoreEntitySet="PostSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Version" ColumnName="Version" />
+          <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OperationSet">
+      <EntityTypeMapping TypeName="IsTypeOf(MetalEDM.Operation)">
+        <MappingFragment StoreEntitySet="OperationSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+          <ScalarProperty Name="Version" ColumnName="Version" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MaterialSet">
+      <EntityTypeMapping TypeName="IsTypeOf(MetalEDM.Material)">
+        <MappingFragment StoreEntitySet="MaterialSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+          <ScalarProperty Name="Version" ColumnName="Version" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrderGroupSet">
+      <EntityTypeMapping TypeName="IsTypeOf(MetalEDM.OrderGroup)">
+        <MappingFragment StoreEntitySet="OrderGroupSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+          <ScalarProperty Name="Version" ColumnName="Version" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrderOperationSet">
+      <EntityTypeMapping TypeName="IsTypeOf(MetalEDM.OrderOperation)">
+        <MappingFragment StoreEntitySet="OrderOperationSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Index" ColumnName="Index" />
+          <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+          <ScalarProperty Name="OperationId" ColumnName="OperationId" />
+          <ScalarProperty Name="Count" ColumnName="Count" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LimitCardMaterialSet">
+      <EntityTypeMapping TypeName="IsTypeOf(MetalEDM.LimitCardMaterial)">
+        <MappingFragment StoreEntitySet="LimitCardMaterialSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Index" ColumnName="Index" />
+          <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+          <ScalarProperty Name="MaterialId" ColumnName="MaterialId" />
+          <ScalarProperty Name="Units" ColumnName="Units" />
+          <ScalarProperty Name="UsagePerUnits" ColumnName="UsagePerUnits" />
+          <ScalarProperty Name="UsagePerOrder" ColumnName="UsagePerOrder" />
+          <ScalarProperty Name="Multiplicity" ColumnName="Multiplicity" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LimitCardOperationSet">
+      <EntityTypeMapping TypeName="IsTypeOf(MetalEDM.LimitCardOperation)">
+        <MappingFragment StoreEntitySet="LimitCardOperationSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Index" ColumnName="Index" />
+          <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+          <ScalarProperty Name="OperationId" ColumnName="OperationId" />
+          <ScalarProperty Name="ElapsedHours" ColumnName="ElapsedHours" />
+          <ScalarProperty Name="ElapsedMinutes" ColumnName="ElapsedMinutes" />
+          <ScalarProperty Name="PricePerHour" ColumnName="PricePerHour" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MetalFileSet">
+      <EntityTypeMapping TypeName="IsTypeOf(MetalEDM.MetalFile)">
+        <MappingFragment StoreEntitySet="MetalFileSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Path" ColumnName="Path" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Index" ColumnName="Index" />
+          <ScalarProperty Name="ChunkCount" ColumnName="ChunkCount" />
+          <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LimitCardFactMaterialSet">
+      <EntityTypeMapping TypeName="IsTypeOf(MetalEDM.LimitCardFactMaterial)">
+        <MappingFragment StoreEntitySet="LimitCardFactMaterialSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="LimitCardMaterialId" ColumnName="LimitCardMaterialId" />
+          <ScalarProperty Name="MaterialId" ColumnName="MaterialId" />
+          <ScalarProperty Name="Count" ColumnName="Count" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserGroupSet">
+      <EntityTypeMapping TypeName="IsTypeOf(MetalEDM.UserGroup)">
+        <MappingFragment StoreEntitySet="UserGroupSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Rights" ColumnName="Rights" />
+          <ScalarProperty Name="Version" ColumnName="Version" />
+          <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SysTabSet">
+      <EntityTypeMapping TypeName="IsTypeOf(MetalEDM.SysTab)">
+        <MappingFragment StoreEntitySet="SysTabSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="DataBaseVersion" ColumnName="DataBaseVersion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="UseLegacyProvider" Value="True" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

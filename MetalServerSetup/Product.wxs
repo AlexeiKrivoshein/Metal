@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+  <?include Variables.wxi?>
+
+	<Product Id="$(var.ProductCode)"  
+           Name="$(var.ProductName)" 
+           Language="1033" 
+           Version="!(bind.FileVersion.MetalTransport.dll)"
+           Manufacturer="$(var.Manufacturer)" 
+           UpgradeCode="$(var.UpgradeCode)">
+    
+		<Package InstallerVersion="200" 
+             Compressed="yes" 
+             InstallScope="perMachine" 
+             Manufacturer="$(var.Manufacturer)"/>
+    
+    <Media Id="1" Cabinet="cab1.cab" EmbedCab="yes" />
+    <Icon Id="icon.ico" SourceFile="$(var.ProjectDir)icon.ico" />
+    
+    <Property Id="ARPPRODUCTICON" Value="icon.ico" />
+    <Property Id="CURRENT_VERSION" Value="$(var.ProductVersion)" />
+    
+    <Property Id="SERVER_NAME" Value="127.0.0.1" />
+    <Property Id="SERVER_PORT" Value="9500" />
+    <Property Id="DRAWING_PATH" Value=" " />
+    
+    <Property Id="USER_NAME" Value="LocalSystem" />
+    <Property Id="USER_PASSWORD" Secure="yes" />
+    
+    <Property Id="SQL_INTEGRATED" Value="1" />
+    <Property Id="SQL_SERVER_NAME" Value="(local)\SQLEXPRESS" />
+    <Property Id="SQL_USER_NAME" Value=" " />
+    <Property Id="SQL_USER_PASSWORD" Secure="yes" />
+    <Property Id="SQL_CONNECTION_STRING" Value=" " />
+
+    <!--
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    -->
+
+    <Feature Id="ProductFeature" Title="MetalServer" Level="1"  ConfigurableDirectory="INSTALLFOLDER">
+      <ComponentGroupRef Id="ProductComponents" />
+    </Feature>
+    
+    <Binary Id="WixAdditionalTools.dll" SourceFile="$(var.WixAdditionalTools_TargetDir)WixAdditionalTools.CA.dll" />
+    <CustomAction Id="CheckInstalledVersion" BinaryKey="WixAdditionalTools.dll" DllEntry="CompareVersion" Execute="immediate" Return="check" />
+
+    <InstallExecuteSequence>
+      <RemoveExistingProducts Before="InstallInitialize" />
+
+      <Custom Action="AddOrUpdateMetalServerCmd" Before="AddOrUpdateMetalServer">NOT REMOVE AND NOT Installed</Custom>
+      <Custom Action="AddOrUpdateMetalServer" After="InstallFiles">NOT REMOVE AND NOT Installed</Custom>
+
+      <Custom Action="StartMetalServerCmd" Before="StartMetalServer">NOT REMOVE</Custom>
+      <Custom Action="StartMetalServer" After="InstallServices">NOT REMOVE</Custom>
+
+      <Custom Action="StopMetalServerCmd" Before="StopMetalServer">1</Custom>
+      <Custom Action="StopMetalServer" Before="InstallValidate">1</Custom>
+
+      <Custom Action="DeleteMetalServerCmd" Before="DeleteMetalServer">REMOVE</Custom>
+      <Custom Action="DeleteMetalServer" After="InstallFiles">REMOVE</Custom>
+    </InstallExecuteSequence>
+  
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER"></Property>
+    <UIRef Id="WixUI_Mondo"/>
+	</Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLFOLDER" Name="MetalServer">
+				  <Directory Id="Model" Name="Model" />
+          <Component Id="SetFolderPermissions" Guid="7A25EA1A-FA09-4336-8011-470F68ED4963" Feature="ProductFeature">
+            <CreateFolder>
+              <util:PermissionEx User="Users" GenericAll="yes"/>
+            </CreateFolder>
+          </Component>
+				</Directory>
+			</Directory>
+		</Directory>
+	</Fragment>
+
+  <Fragment>
+    <CustomAction Id="AddOrUpdateMetalServerCmd" Property="AddOrUpdateMetalServer" Value="ServiceName=MetalServer;ServiceDisplayName=Metal server;ServiceDescription=Metal server service;ServicePath=[INSTALLFOLDER]MetalServer.exe;ServiceUserName=[USER_NAME];ServicePassword=[USER_PASSWORD];" />
+    <CustomAction Id="AddOrUpdateMetalServer" BinaryKey="WixAdditionalTools.dll" DllEntry="AddOrUpdateService" Execute="deferred" Return="check" Impersonate="no" />
+
+    <CustomAction Id="StartMetalServerCmd" Property="StartMetalServer" Value="MetalServer" />
+    <CustomAction Id="StartMetalServer" BinaryKey="WixAdditionalTools.dll" DllEntry="StartService" Execute="deferred" Return="ignore" Impersonate="no" />
+
+    <CustomAction Id="StopMetalServerCmd" Property="StopMetalServer" Value="MetalServer" />
+    <CustomAction Id="StopMetalServer" BinaryKey="WixAdditionalTools.dll" DllEntry="StopMetalServer" Execute="immediate" Return="ignore" Impersonate="no" />
+
+    <CustomAction Id="DeleteMetalServerCmd" Property="DeleteMetalServer" Value="MetalServer" />
+    <CustomAction Id="DeleteMetalServer" BinaryKey="WixAdditionalTools.dll" DllEntry="DeleteService" Execute="deferred" Return="ignore" Impersonate="no" />
+  </Fragment>
+</Wix>

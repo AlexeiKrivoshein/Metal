@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{31C70227-39BF-4EFE-B4EB-8BB7964E4A60}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>MetalServer</RootNamespace>
+    <AssemblyName>MetalServer</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.10.1.1\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.12.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.12\lib\net45\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Handler\BaseHandler.cs" />
+    <Compile Include="Handler\GetList\GetActualVersionElementsListHandler.cs" />
+    <Compile Include="Handler\GetList\GetPaginationElementsListHandler.cs" />
+    <Compile Include="Handler\Get\GetFileHandler.cs" />
+    <Compile Include="Handler\FilterHandler.cs" />
+    <Compile Include="Handler\Get\GetElementHandler.cs" />
+    <Compile Include="Handler\GetList\GetOrderIdFiltredElementsHandler.cs" />
+    <Compile Include="Handler\GetList\GetAllVersionElementsListHandler.cs" />
+    <Compile Include="Handler\HandlerAttribute.cs" />
+    <Compile Include="Handler\IDatagramHandler.cs" />
+    <Compile Include="Handler\Login\LoginHandler.cs" />
+    <Compile Include="Handler\Remove\RemoveFileHandler.cs" />
+    <Compile Include="Handler\Remove\RemoveElementHandler.cs" />
+    <Compile Include="Handler\Set\SetCustomerHandler.cs" />
+    <Compile Include="Handler\Get\GetPlanHandler.cs" />
+    <Compile Include="Handler\Set\SetEmployeeHandler.cs" />
+    <Compile Include="Handler\Set\SetFileHandler.cs" />
+    <Compile Include="Handler\Set\SetLimitMaterialHandler.cs" />
+    <Compile Include="Handler\Set\SetLimitOperationHandler.cs" />
+    <Compile Include="Handler\Set\SetMaterialHandler.cs" />
+    <Compile Include="Handler\Set\SetOperationHandler.cs" />
+    <Compile Include="Handler\Set\SetOrderGroupHandler.cs" />
+    <Compile Include="Handler\Set\SetOrderHandler.cs" />
+    <Compile Include="Handler\Set\SetOrderOperationHandler.cs" />
+    <Compile Include="Handler\Set\SetPostHandler.cs" />
+    <Compile Include="Handler\Set\SetUserGroupHandler.cs" />
+    <Compile Include="MetallServerHost.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Server\ClientWorker.cs" />
+    <Compile Include="Server\ConnectionBroker.cs" />
+    <Compile Include="Server\IServer.cs" />
+    <Compile Include="Server\TcpMetalServer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".editorconfig" />
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MetalDAL\MetalDAL.csproj">
+      <Project>{bbf86cdc-613f-4ebb-9b6b-8749a5a7da68}</Project>
+      <Name>MetalDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MetalDiagnostic\MetalDiagnostic.csproj">
+      <Project>{4948e48f-b49f-48f9-9132-ee93e71fcbc3}</Project>
+      <Name>MetalDiagnostic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MetalTransport\MetalTransport.csproj">
+      <Project>{7270AA44-A7D9-4383-85A4-F0A98AB98617}</Project>
+      <Name>MetalTransport</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+</Project>

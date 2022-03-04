@@ -1,0 +1,32 @@
+﻿<Window x:Class="Presentation.Window1"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Presentation"
+    Title="Selected ListBoxItem Template" Height="300" Width="300">
+
+    <Window.Resources>
+        <local:Department x:Key="department" />
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Grid.Column="0">Manager Name:
+        </Label>
+        <Label Grid.Row="0" Grid.Column="1" Content="{Binding Source={StaticResource department}, Path=Manager.Name}"/>
+        <Label Grid.Row="1" Grid.Column="0">Manager Salary</Label>
+        <Label Grid.Row="1" Grid.Column="1" Content="{Binding Source={StaticResource department}, Path=Manager.Salary}"/>
+        <Canvas Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
+            <Button Height="22" Canvas.Left="147" Canvas.Top="9" Width="97" Click="ChangeManager_Click" >Change Manager
+            </Button>
+            <Button Height="21.96" Canvas.Left="73" Canvas.Top="9.04" Width="60" Click="GiveRaise_Click">Give Raise
+            </Button>
+        </Canvas>
+    </Grid>
+</Window>

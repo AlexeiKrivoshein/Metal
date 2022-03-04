@@ -1,0 +1,26 @@
+﻿<Window x:Class="MetalClient.View.frmLoad"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="{Binding Header}" 
+        ResizeMode="NoResize" 
+        Height="90" 
+        Width="700" 
+        BorderThickness="2" 
+        WindowStyle="None" 
+        WindowStartupLocation="CenterScreen"
+        Background="GhostWhite" 
+        BorderBrush="Black">
+    
+    <DockPanel VerticalAlignment="Stretch" Width="680" Height="80">
+        <TextBlock DockPanel.Dock="Top" FontWeight="Bold" HorizontalAlignment="Center" Text="{Binding Header}"/>
+        <Button Style="{StaticResource MainButtonStyle}" Margin="5,0,5,0" DockPanel.Dock="Right" Content="Отмена" Click="Cancel_Click"/>
+        <Border Style="{StaticResource MainBorderStyle}" Height="40">
+            <ProgressBar BorderThickness="0" Background="GhostWhite" Foreground="Green"
+                             Value="{Binding Value, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
+                             Maximum="{Binding Maximum}"/>
+        </Border>
+    </DockPanel>
+</Window>

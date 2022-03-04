@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" 
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+  <?include Variables.wxi?>
+
+  <Product Id="$(var.ProductCode)" 
+           Name="$(var.ProductName)"
+           Language="1033" 
+           Version="!(bind.FileVersion.MetalTransport.dll)"
+           Manufacturer="$(var.Manufacturer)"
+           UpgradeCode="$(var.UpgradeCode)">
+    
+		<Package InstallerVersion="200" 
+             Compressed="yes" 
+             InstallScope="perMachine"
+             Manufacturer="$(var.Manufacturer)"/>
+    
+    <Media Id="1" Cabinet="cab1.cab" EmbedCab="yes" />
+    <Icon Id="icon.ico" SourceFile="$(var.ProjectDir)icon.ico" />
+    
+    <Property Id="ARPPRODUCTICON" Value="icon.ico" />
+    <Property Id="CURRENT_VERSION" Value="$(var.ProductVersion)" />
+
+    <Property Id="SERVER_NAME" Value="127.0.0.1" />
+    <Property Id="SERVER_PORT" Value="9500" />
+    
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    
+		<Feature Id="ProductFeature" Title="MetalClient" Level="1" ConfigurableDirectory="INSTALLFOLDER">
+			<ComponentGroupRef Id="ProductComponents"/>
+		</Feature>
+
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER"></Property>
+    <UIRef Id="WixUI_Mondo"/>
+	</Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLFOLDER" Name="MetalClient">
+          <Component Id="SetFolderPermissions" Guid="79F81ECC-B0F8-4A9F-9EB2-9CF1EE7C7186" Feature="ProductFeature">
+            <CreateFolder>
+              <util:PermissionEx User="Users" GenericAll="yes"/>
+            </CreateFolder>
+          </Component>
+        </Directory>
+      </Directory>
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="MetalClient"/>
+      </Directory>
+      <Directory Id="DesktopFolder" Name="Desktop"/>
+		</Directory>
+	</Fragment>
+</Wix>

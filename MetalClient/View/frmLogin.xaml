@@ -1,0 +1,46 @@
+﻿<Window x:Class="MetalClient.frmLogin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MetalClient"
+        mc:Ignorable="d"
+        Title="Вход" Height="225" Width="500" ResizeMode="NoResize" Background="GhostWhite" WindowStartupLocation="CenterScreen">
+    <StackPanel>
+        <TextBlock DockPanel.Dock="Top" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center">Вход пользователя</TextBlock>
+
+        <Border Style="{StaticResource MainBorderStyle}">
+
+            <Grid Margin="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"></RowDefinition>
+                    <RowDefinition Height="40"></RowDefinition>
+
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock FontSize="14" Grid.Row="0" Grid.Column="0" Margin="5">Пользователь</TextBlock>
+                
+                <ComboBox VerticalAlignment="Center" FontSize="14" Grid.Row="0" Grid.Column="1"  Margin="5"
+                                    ItemsSource="{Binding Elements}"
+                                    SelectedItem ="{Binding Selected, Mode=TwoWay}"/>
+
+                <TextBlock FontSize="14" Grid.Row="1" Grid.Column="0" Margin="5">Пароль</TextBlock>
+                <PasswordBox Name="txtPassword" FontSize="14" Grid.Row="1" Grid.Column="1" Margin="5" Height="21" MaxLength="50"/>
+
+            </Grid>
+        </Border>
+
+        <Border Style="{StaticResource MainBorderStyle}">
+            <DockPanel >
+                <Button Style="{StaticResource MainButtonStyle}" Content="Вход" Margin="5" Command="{Binding LoginCommand}" CommandParameter="{Binding ElementName=txtPassword}" DockPanel.Dock="Left" IsDefault="True"/>
+                <Button Style="{StaticResource MainButtonStyle}" Content="Отмена" Margin="5" Command="{Binding CloseCommand}" DockPanel.Dock="Left" IsCancel="True"/>
+                <Label></Label>
+            </DockPanel>
+        </Border>
+    </StackPanel>
+</Window>

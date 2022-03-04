@@ -1,0 +1,411 @@
+﻿<Window x:Class="MetalClient.frmOrderList"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:helper="clr-namespace:MetalClient.Helper"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:local="clr-namespace:MetalClient"
+        xmlns:wpfTool="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
+        xmlns:controls="clr-namespace:MetalClient.Controls" 
+        mc:Ignorable="d"
+        Title="Список заказов" Height="700" Width="1024" 
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized" Background="GhostWhite">
+
+    <Window.Resources>
+        <local:DateToString x:Key="DateToString"/>
+        <local:OrderStateLocalize x:Key="OrderStateLocalize"/>
+        <local:CreateOrderRight x:Key="CreateOrderRight"/>
+        <local:GridRowEnabledConverter x:Key="GridRowEnabledConverter"/>
+        <local:FilterValueConverter x:Key="FilterValueConverter"/>
+    </Window.Resources>
+
+    <DockPanel VerticalAlignment="Stretch">
+        <Menu FontSize="14" DockPanel.Dock="Top" HorizontalAlignment="Left" BorderBrush="Black" Background="GhostWhite" Margin="5">
+            <MenuItem Header="Файл">
+                <MenuItem Header="Выход" Name="mnExit" Click="mnExit_Click"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="Справочники">
+                <MenuItem Header="Заказчики" Command="{Binding ShowCustomerListCommand}"></MenuItem>
+                <MenuItem Header="Операции" Command="{Binding ShowOperationListCommand}"></MenuItem>
+                <MenuItem Header="Материалы" Command="{Binding ShowMaterialListCommand}"></MenuItem>
+                <MenuItem Header="Сотрудники" Command="{Binding ShowEmployeeListCommand}"></MenuItem>
+                <MenuItem Header="Группы пользователей" Command="{Binding ShowUserGroupListCommand}"
+                          IsEnabled = "{Binding LockObject, RelativeSource={RelativeSource AncestorType={x:Type Window}}, Converter={StaticResource GridRowEnabledConverter}, ConverterParameter={x:Static helper:UserGroupHelper.USERS_GROUP}}"/>
+            </MenuItem>
+        </Menu>
+
+        <TabControl Name="tbMain" Background="GhostWhite" Grid.Column="1">
+            <TabItem FontSize="16" Header="Заказы" Background="GhostWhite" Name="tabOrder">
+                <Grid Background="GhostWhite" DataContext="{Binding OrderListViewModel}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="60"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="{Binding FilterPanelSize}"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Border Style="{StaticResource MainBorderStyle}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+                        <DockPanel VerticalAlignment="Center">
+                            <Button Style="{StaticResource MainButtonStyle}" Content="Добавить" Command="{Binding AddCommand}" DockPanel.Dock="Left"
+                                    IsEnabled = "{Binding LockObject, RelativeSource={RelativeSource AncestorType={x:Type Window}}, Converter={StaticResource CreateOrderRight}}"/>
+                            <Button Style="{StaticResource MainButtonStyle}" Content="Открыть" Command="{Binding OpenCommand}" DockPanel.Dock="Left"/>
+                            <Button Style="{StaticResource MainButtonStyle}" Content="Удалить" Command="{Binding RemoveCommand}" DockPanel.Dock="Left"/>
+
+                            <TextBlock Name="frmHeader" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center">Заказы</TextBlock>
+                        </DockPanel>
+                    </Border>
+
+                    <DockPanel Name="pnlFilter" Grid.Row="1" Grid.Column="0" Margin="0,5,0,5">
+                        <Button Width="12" DockPanel.Dock="Right" Name="btnFilter" FontSize="10" Content=">" Command="{Binding ToggleFilterCommand}"/>
+
+                        <Grid DockPanel.Dock="Bottom" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            
+                            <Button Content="Отменить" Margin="5" Grid.Column="0" Grid.Row="0" 
+                                    Command="{Binding DropFilterCommand}"/>
+                            <Button Content="Фильтр" Margin="5" Grid.Column="1" Grid.Row="1" 
+                                    Command="{Binding SetFilterCommand}"/>
+                        </Grid>
+                        
+                        <StackPanel Orientation="Vertical" Grid.Column="0" Margin="2">
+                            <Label>Дата создания заказа</Label>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <wpfTool:DateTimePicker 
+				                            ShowButtonSpinner="False" TimePickerVisibility="Hidden" Grid.Column="0"
+				                            Value="{Binding Filter.DateFrom, Mode=TwoWay, Converter={StaticResource FilterValueConverter}}"/>
+                                
+                                <wpfTool:DateTimePicker 
+				                            ShowButtonSpinner="False" TimePickerVisibility="Hidden" Grid.Column="1"
+				                            Value="{Binding Filter.DateTo, Mode=TwoWay, Converter={StaticResource FilterValueConverter}}"/>
+                            </Grid>
+
+                            <Label>Номер заказа</Label>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBox Grid.Column="0" 
+                                         Text="{Binding Filter.NumberFrom, Mode=TwoWay, Converter={StaticResource FilterValueConverter}}"
+                                         PreviewTextInput="IntValid"/>
+                                <TextBox Grid.Column="1"
+                                         Text="{Binding Filter.NumberTo, Mode=TwoWay, Converter={StaticResource FilterValueConverter}}"
+                                         PreviewTextInput="IntValid"/>
+                            </Grid>
+
+                            <Label>Группа заказа</Label>
+                            <DockPanel>
+                                <Button Margin="5,0,5,0" DockPanel.Dock="Right" Height="25" Width="25" Content="X" Command="{Binding ClearFilterOrderGroupCommand}"/>
+                                <Button Margin="5,0,0,0" DockPanel.Dock="Right" Height="25" Width="25" Content="..." Command="{Binding SelectFilterOrderGroupCommand}"/>
+                                <ComboBox Margin="5,0,0,0" FontSize="14"
+                                      SelectedValuePath="Id"
+                                      SelectedValue="{Binding Filter.OrderGroupId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource FilterValueConverter}}"
+                                      ItemsSource="{Binding OrderGroupCache}"
+                                      DisplayMemberPath="Name"/>
+                            </DockPanel>
+
+                            <Label>Наименование</Label>
+                            <TextBox Margin="5,0,5,0"
+                                     Text="{Binding Filter.Name, Mode=TwoWay, Converter={StaticResource FilterValueConverter}}"/>
+
+                            <Label>Количество</Label>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBox Grid.Column="0"
+                                         Text="{Binding Filter.CountFrom, Mode=TwoWay, Converter={StaticResource FilterValueConverter}}"
+                                         PreviewTextInput="IntValid"/>
+                                <TextBox Grid.Column="1"
+                                         Text="{Binding Filter.CountTo, Mode=TwoWay, Converter={StaticResource FilterValueConverter}}"
+                                         PreviewTextInput="IntValid"/>
+                            </Grid>
+
+                            <Label>Заказчик</Label>
+                            <DockPanel>
+                                <Button Margin="5,0,5,0" DockPanel.Dock="Right" Height="25" Width="25" Content="X" Command="{Binding ClearFilterCustomerCommand}"/>
+                                <Button Margin="5,0,0,0" DockPanel.Dock="Right" Height="25" Width="25" Content="..." Command="{Binding SelectFilterCustomerCommand}"/>
+                                <ComboBox VerticalAlignment="Center" FontSize="14" Margin="5,0,0,0"
+                                    SelectedValuePath="Id"
+                                    SelectedValue="{Binding Filter.CustomerId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource FilterValueConverter}}"
+                                    ItemsSource="{Binding CustomerCache}"
+                                    DisplayMemberPath="Name"/>
+                            </DockPanel>
+
+                            <Label>Состояние заказа</Label>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <ComboBox Grid.Column="0" Margin="5,0,5,0"
+                                          ItemsSource="{Binding Filter.OrderStateFrom, Converter={local:EnumToCollectionConverter}, Mode=OneTime}"
+                                          SelectedValuePath="Value"
+                                          DisplayMemberPath="Description"
+                                          SelectedValue="{Binding Filter.OrderStateFrom}"/>
+
+                                <ComboBox Grid.Column="1" Margin="5,0,5,0"
+                                          ItemsSource="{Binding Filter.OrderStateTo, Converter={local:EnumToCollectionConverter}, Mode=OneTime}"
+                                          SelectedValuePath="Value"
+                                          DisplayMemberPath="Description"
+                                          SelectedValue="{Binding Filter.OrderStateTo}"/>
+                            </Grid>
+
+                            <Label>Расчётная цена</Label>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBox Grid.Column="0"
+                                         Text="{Binding Filter.CalcPriceFrom, Mode=TwoWay, Converter={StaticResource FilterValueConverter}}"
+                                         PreviewTextInput="DoubleValid"/>
+                                <TextBox Grid.Column="1"
+                                         Text="{Binding Filter.CalcPriceTo, Mode=TwoWay, Converter={StaticResource FilterValueConverter}}"
+                                         PreviewTextInput="DoubleValid"/>
+                            </Grid>
+
+                            <Label>Предлагаемая цена</Label>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBox Grid.Column="0"
+                                         Text="{Binding Filter.ExpectedPriceFrom, Mode=TwoWay, Converter={StaticResource FilterValueConverter}}"
+                                         PreviewTextInput="DoubleValid"/>
+                                <TextBox Grid.Column="1"
+                                         Text="{Binding Filter.ExpectedPriceTo, Mode=TwoWay, Converter={StaticResource FilterValueConverter}}"
+                                         PreviewTextInput="DoubleValid"/>
+                            </Grid>
+
+                            <Label>Отпускная цена</Label>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBox Grid.Column="0"
+                                         Text="{Binding Filter.SalesPriceFrom, Mode=TwoWay, Converter={StaticResource FilterValueConverter}}"
+                                         PreviewTextInput="DoubleValid"/>
+                                <TextBox Grid.Column="1"
+                                         Text="{Binding Filter.SalesPriceTo, Mode=TwoWay, Converter={StaticResource FilterValueConverter}}"
+                                         PreviewTextInput="DoubleValid"/>
+                            </Grid>
+
+                            <Label>Срок изготовления</Label>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <wpfTool:DateTimePicker 
+				                            ShowButtonSpinner="False" TimePickerVisibility="Hidden" Grid.Column="0"
+				                            Value="{Binding Filter.ReadyDateFrom, Mode=TwoWay, Converter={StaticResource FilterValueConverter}}"/>
+                                
+                                <wpfTool:DateTimePicker 
+				                            ShowButtonSpinner="False" TimePickerVisibility="Hidden"  Grid.Column="1"
+				                            Value="{Binding Filter.ReadyDateTo, Mode=TwoWay, Converter={StaticResource FilterValueConverter}}"/>
+                            </Grid>
+                        </StackPanel>
+                        
+                    </DockPanel>
+
+                    <controls:MDataGrid
+                                Grid.Row="1" Grid.Column="1"
+                                Grid.ColumnSpan="2"
+                                ItemsSource="{Binding DefaultView, UpdateSourceTrigger=PropertyChanged}"
+                                SelectedItem="{Binding Selected, Mode=TwoWay}"
+                                SelectCommand="{Binding OpenCommand}"
+                                ScrollChanged="grdOrders_ScrollChanged">
+                        <controls:MDataGrid.Columns>
+                            <DataGridTextColumn Header="Номер" Width="0.5*" IsReadOnly="True"
+                                                Binding="{Binding Number}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Right" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Header="Дата" Width="*" IsReadOnly="True"
+                                                Binding="{Binding Date, Converter={StaticResource DateToString}}"/>
+
+                            <DataGridTextColumn Header="Наименование" Width="3*" IsReadOnly="True"
+                                                Binding="{Binding Name}"/>
+
+                            <DataGridTextColumn Header="Заказчик" Width="3*" IsReadOnly="True"
+                                                Binding="{Binding Customer}"/>
+
+                            <DataGridTextColumn Header="Группа" Width="3*" IsReadOnly="True"
+                                                Binding="{Binding Group}"/>
+
+                            <DataGridTextColumn Header="Состояние" Width="*" IsReadOnly="True"
+                                                Binding="{Binding OrderState, Mode=OneWay, Converter={StaticResource OrderStateLocalize}}"/>
+                        </controls:MDataGrid.Columns>
+                    </controls:MDataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem FontSize="16" Header="План" Background="GhostWhite" Name="tabPlan">
+                <Grid Background="GhostWhite" DataContext="{Binding PlanListViewModel}">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="60"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Style="{StaticResource MainBorderStyle}" Grid.Row="0">
+                        <DockPanel VerticalAlignment="Center">
+                            <Button Style="{StaticResource MainButtonStyle}" Content="&lt;&lt;" DockPanel.Dock="Left" Command="{Binding GetPrevPlanCommand}"/>
+                            <Button Style="{StaticResource MainButtonStyle}" Content="&gt;&gt;" DockPanel.Dock="Left" Command="{Binding GetNextPlanCommand}"/>
+                            <Button Style="{StaticResource MainButtonStyle}" Content="Печать" DockPanel.Dock="Left" Click="PlanPrint_Click"/>
+
+                            <TextBlock FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Header}"/>
+                        </DockPanel>
+                    </Border>
+
+                    <controls:MDataGrid
+                                Grid.Row="1"
+                                ItemsSource="{Binding Elements}"
+                                SelectedItem="{Binding Selected, Mode=TwoWay}"
+                                SelectCommand="{Binding SelectCommand}">
+                        <!--OpenCommand-->
+                        
+                        <controls:MDataGrid.Columns>
+                            <DataGridTextColumn Header="Номер&#x0a;заказа" Width="0.5*"
+                                                Binding="{Binding Path=Number}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Right" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+
+                            <DataGridTextColumn Header="Заказчик" Width="2*"
+                                            Binding="{Binding Path=Customer}"/>
+
+                            <DataGridTextColumn Header="Наименование продукции" Width="2*"
+                                            Binding="{Binding Path=Name}"/>
+
+                            <DataGridTextColumn Header="Кол." Width="0.3*"
+                                            Binding="{Binding Path=Count}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Right" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Header="Цена без НДС" Width="0.7*"
+                                            Binding="{Binding Path=Price}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Right" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Header="Сумма" Width="0.5*"
+                                            Binding="{Binding Path=Sum}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Right" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Header="Готово" Width="0.5*"
+                                            Binding="{Binding Path=Maked}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Right" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Header="1 неделя" Width="0.5*"
+                                            Binding="{Binding Path=Week1}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Right" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Header="2 неделя" Width="0.5*"
+                                            Binding="{Binding Path=Week2}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Right" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Header="3 неделя" Width="0.5*"
+                                            Binding="{Binding Path=Week3}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Right" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Header="4 неделя" Width="0.5*"
+                                            Binding="{Binding Path=Week4}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Right" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Header="Выполнение" Width="0.7*"
+                                            Binding="{Binding Path=MakedSum}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Right" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Header="Дата в&#x0a;производство" Width="0.7*"
+                                            Binding="{Binding Path=OrderInManufactureDate, Converter={StaticResource DateToString}}"/>
+
+                            <DataGridTextColumn Header="Срок&#x0a;выполнения" Width="0.7*"
+                                            Binding="{Binding Path=ReadyDate, Converter={StaticResource DateToString}}"/>
+
+                            <DataGridTextColumn Header="Лимиты" Width="1*"
+                                            Binding="{Binding Path=LimitCard}"/>
+                        </controls:MDataGrid.Columns>
+                        <controls:MDataGrid.FooterItems>
+                            <controls:MDataGridFooterItem Position="0" Text="{Binding Footer.Sum}"/>
+                            <controls:MDataGridFooterItem Position="5" Text="{Binding Footer.Sum}"/>
+                            <controls:MDataGridFooterItem Position="11" Text="{Binding Footer.MakedSum}"/>
+                        </controls:MDataGrid.FooterItems>
+                    </controls:MDataGrid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </DockPanel>
+</Window>

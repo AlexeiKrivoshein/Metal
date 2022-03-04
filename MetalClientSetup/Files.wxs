@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+  <?include Variables.wxi?>
+  
+  <Fragment>
+    <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <ComponentRef Id="ApplicationShortcut" />
+      <ComponentRef Id="ApplicationShortcutDesktop" />
+      <Component Id="MetalClient.exe" Guid="cabdb19a-d768-46d3-944e-6cdda8c85d94">
+        <File Id="MetalClient.exe" Name="MetalClient.exe" Source="$(var.MetalClient_TargetDir)MetalClient.exe" />
+      </Component>
+      <Component Id="MetalClient.exe.config" Guid="9dfd8aef-8bbd-42be-bc19-ece46a9cccce">
+        <File Id="MetalClient.exe.config" Name="MetalClient.exe.config" Source="$(var.MetalClient_TargetDir)MetalClient.exe.config" />
+        <util:XmlFile Id="UpdateServerName" Action="setValue" File="[INSTALLFOLDER]MetalClient.exe.config" SelectionLanguage="XPath" Permanent="yes"
+                      ElementPath="/configuration/appSettings/add[\[]@key='ServerName'[\]]" Name="value" Value="[SERVER_NAME]"/>
+        <util:XmlFile Id="UpdateServerPort" Action="setValue" File="[INSTALLFOLDER]MetalClient.exe.config" SelectionLanguage="XPath" Permanent="yes"
+                      ElementPath="/configuration/appSettings/add[\[]@key='Port'[\]]" Name="value" Value="[SERVER_PORT]"/>
+      </Component>
+      <Component Id="Xceed.Wpf.Toolkit.dll" Guid="6fe071db-6ce4-4eea-a331-0de3e90f0e52">
+        <File Id="Xceed.Wpf.Toolkit.dll" Name="Xceed.Wpf.Toolkit.dll" Source="$(var.MetalClient_TargetDir)Xceed.Wpf.Toolkit.dll" />
+      </Component>
+      <Component Id="MetalTransport.dll" Guid="cf98411a-bb8f-485b-b465-ecb6f31993dc">
+        <File Id="MetalTransport.dll" Name="MetalTransport.dll" Source="$(var.MetalTransport_TargetDir)MetalTransport.dll" />
+      </Component>
+      <Component Id="Newtonsoft.Json.dll" Guid="513056ef-ae25-4e59-bec0-cf1d8b3760a2">
+        <File Id="Newtonsoft.Json.dll" Name="Newtonsoft.Json.dll" Source="$(var.MetalTransport_TargetDir)Newtonsoft.Json.dll" />
+      </Component>
+      <Component Id="MetalDiagnostic.dll" Guid="a1f9ea9e-cd44-4093-a4f6-f34aebf21a9b">
+        <File Id="MetalDiagnostic.dll" Name="MetalDiagnostic.dll" Source="$(var.MetalDiagnostic_TargetDir)MetalDiagnostic.dll" />
+      </Component>
+      <Component Id="log4net.dll" Guid="9736c136-6c33-417c-b3d1-cbed09e81b69">
+        <File Id="log4net.dll" Name="log4net.dll" Source="$(var.MetalClient_TargetDir)log4net.dll" />
+      </Component>
+      <Component Id="SaveRegistry" Guid="E88A4811-B6D0-4AEB-A36F-211919D566CA">
+        <RegistryKey Root="HKLM" Key="$(var.InstallerRegKey)">
+          <RegistryValue Name="Version" Value="[CURRENT_VERSION]" Type="string" />
+        </RegistryKey>
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

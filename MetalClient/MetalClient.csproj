@@ -1,0 +1,397 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{78641031-3756-4064-A55F-544A1E19A2A7}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>MetalClient</RootNamespace>
+    <AssemblyName>MetalClient</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;CLIENT</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;CLIENT</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Ico\icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Client\ClientRequestExecutorHandler.cs" />
+    <Compile Include="Client\TcpMetalClient.cs" />
+    <Compile Include="Command\RelayCommand.cs" />
+    <Compile Include="Controls\MDataGridFooterItem.xaml.cs">
+      <DependentUpon>MDataGridFooterItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MDatePicker.xaml.cs">
+      <DependentUpon>MDatePicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MTextBox.xaml.cs">
+      <DependentUpon>MTextBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TextBoxFormats.cs" />
+    <Compile Include="Converter.cs" />
+    <Compile Include="DataManager\ClientDataManager.cs" />
+    <Compile Include="Dialog\IMessageBoxService.cs" />
+    <Compile Include="Dialog\IWindowService.cs" />
+    <Compile Include="Dialog\MessageBoxService.cs" />
+    <Compile Include="Dialog\StartProgressResult.cs" />
+    <Compile Include="Dialog\WindowService.cs" />
+    <Compile Include="Engine\ObservableConcurrentDictionary.cs" />
+    <Compile Include="Exceptions\RequestException.cs" />
+    <Compile Include="Helper\EnumHelper.cs" />
+    <Compile Include="Helper\ValueDescription.cs" />
+    <Compile Include="Helper\VisualComponentHelper.cs" />
+    <Compile Include="MarkupExtension.cs" />
+    <Compile Include="Controls\MDataGrid.xaml.cs">
+      <DependentUpon>MDataGrid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RelayCommand.cs" />
+    <Compile Include="Right.cs" />
+    <Compile Include="StoreEventArgs.cs" />
+    <Compile Include="ViewModel\CustomerViewModel.cs" />
+    <Compile Include="ViewModel\ElementListSelectType.cs" />
+    <Compile Include="ViewModel\ElementListState.cs" />
+    <Compile Include="ViewModel\ComplexElementsListViewModel.cs" />
+    <Compile Include="ViewModel\ElementsListViewModelBaseCommand.cs" />
+    <Compile Include="ViewModel\ElementState.cs" />
+    <Compile Include="ViewModel\ElementViewModelBase.cs" />
+    <Compile Include="ViewModel\EmployeeListViewModel.cs" />
+    <Compile Include="ViewModel\EmployeeViewModel.cs" />
+    <Compile Include="ViewModel\IElementListViewModel.cs" />
+    <Compile Include="ViewModel\IElementViewModel.cs" />
+    <Compile Include="ViewModel\IViewModel.cs" />
+    <Compile Include="ViewModel\LimitCardMaterialListViewModel.cs" />
+    <Compile Include="ViewModel\LimitCardOperationListViewModel.cs" />
+    <Compile Include="ViewModel\LimitCardViewModel.cs" />
+    <Compile Include="ViewModel\LoadViewModel.cs" />
+    <Compile Include="ViewModel\LoginViewModel.cs" />
+    <Compile Include="ViewModel\ElementsListViewModelBase.cs" />
+    <Compile Include="ViewModel\CustomerListViewModel.cs" />
+    <Compile Include="ViewModel\MainFormViewModel.cs" />
+    <Compile Include="ViewModel\MaterialListViewModel.cs" />
+    <Compile Include="ViewModel\MaterialViewModel.cs" />
+    <Compile Include="ViewModel\OperationListViewModel.cs" />
+    <Compile Include="ViewModel\OperationViewModel.cs" />
+    <Compile Include="ViewModel\OrderDrawingListViewModel.cs" />
+    <Compile Include="ViewModel\OrderGroupListViewModel.cs" />
+    <Compile Include="ViewModel\OrderGroupViewModel.cs" />
+    <Compile Include="ViewModel\OrderViewModel.cs" />
+    <Compile Include="ViewModel\OrderViewModelCommand.cs" />
+    <Compile Include="ViewModel\PlanFooter.cs" />
+    <Compile Include="ViewModel\PlanListViewModel.cs" />
+    <Compile Include="ViewModel\SimpleElementsListViewModel.cs" />
+    <Compile Include="ViewModel\UserGroupListViewModel.cs" />
+    <Compile Include="ViewModel\UserGroupViewModel.cs" />
+    <Compile Include="View\frmEmployee.xaml.cs">
+      <DependentUpon>frmEmployee.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\frmEmployeeList.xaml.cs">
+      <DependentUpon>frmEmployeeList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\frmLoad.xaml.cs">
+      <DependentUpon>frmLoad.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\frmLogin.xaml.cs">
+      <DependentUpon>frmLogin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\frmMaterial.xaml.cs">
+      <DependentUpon>frmMaterial.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\frmOperation.xaml.cs">
+      <DependentUpon>frmOperation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\frmOrderDrawingList.xaml.cs">
+      <DependentUpon>frmOrderDrawingList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\frmOrderGroup.xaml.cs">
+      <DependentUpon>frmOrderGroup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\frmOrderGroupList.xaml.cs">
+      <DependentUpon>frmOrderGroupList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\frmOrderPrint.xaml.cs">
+      <DependentUpon>frmOrderPrint.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\frmProcessed.xaml.cs">
+      <DependentUpon>frmProcessed.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\frmUserGroup.xaml.cs">
+      <DependentUpon>frmUserGroup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\frmUserGroupList.xaml.cs">
+      <DependentUpon>frmUserGroupList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\CollectionExtension.cs" />
+    <Compile Include="Helper\FileHelper.cs" />
+    <Compile Include="Helper\Funcs.cs" />
+    <Compile Include="Helper\MessageBoxHelper.cs" />
+    <Compile Include="Helper\UserGroupHelper.cs" />
+    <Compile Include="Locker.cs" />
+    <Compile Include="MetalMessageBox.xaml.cs">
+      <DependentUpon>MetalMessageBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.cs" />
+    <Compile Include="ValidateRule\Validator.cs" />
+    <Compile Include="View\ViewHelper.cs" />
+    <Page Include="Controls\MDataGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MDataGridFooterItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MDatePicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MTextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\frmCustomer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\frmCustomersList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\frmLimitCard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\frmEmployee.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\frmEmployeeList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\frmLoad.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\frmLogin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\frmMaterial.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\frmMaterialsList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\frmOperation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\frmOperationsList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\frmOrderDrawingList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\frmOrderGroup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\frmOrderGroupList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\frmOrderList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Client\IClient.cs" />
+    <Compile Include="View\frmCustomer.xaml.cs">
+      <DependentUpon>frmCustomer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\frmCustomersList.xaml.cs">
+      <DependentUpon>frmCustomersList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\frmLimitCard.xaml.cs">
+      <DependentUpon>frmLimitCard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\frmMaterialsList.xaml.cs">
+      <DependentUpon>frmMaterialsList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\frmOperationsList.xaml.cs">
+      <DependentUpon>frmOperationsList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\OrderListViewModel.cs" />
+    <Compile Include="View\frmOrderList.xaml.cs">
+      <DependentUpon>frmOrderList.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="View\frmOrder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\frmOrderPrint.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\frmProcessed.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\frmUserGroup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\frmUserGroupList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MetalMessageBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="View\frmOrder.xaml.cs">
+      <DependentUpon>frmOrder.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Resources\plan.xlsx" />
+    <Resource Include="Resources\order.xlsx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\refresh.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="EPPlus">
+      <Version>5.7.0</Version>
+    </PackageReference>
+    <PackageReference Include="Extended.Wpf.Toolkit">
+      <Version>4.2.0</Version>
+    </PackageReference>
+    <PackageReference Include="log4net">
+      <Version>2.0.12</Version>
+    </PackageReference>
+    <PackageReference Include="System.ValueTuple">
+      <Version>4.5.0</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MetalDiagnostic\MetalDiagnostic.csproj">
+      <Project>{4948e48f-b49f-48f9-9132-ee93e71fcbc3}</Project>
+      <Name>MetalDiagnostic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MetalTransport\MetalTransport.csproj">
+      <Project>{7270AA44-A7D9-4383-85A4-F0A98AB98617}</Project>
+      <Name>MetalTransport</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Ico\error.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Ico\info.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Ico\success.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Ico\warning.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Ico\stop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Ico\icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\calendar.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

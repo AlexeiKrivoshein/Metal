@@ -1,0 +1,72 @@
+﻿<UserControl x:Class="MetalServerSetupWPF.View.Page.PublicationPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:pages="clr-namespace:MetalServerSetupWPF.ViewModel.Pages"
+             xmlns:converter="clr-namespace:MetalServerSetupWPF.Converters"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:behavior="clr-namespace:MetalServerSetupWPF.Behaviors"
+             mc:Ignorable="d" d:DesignHeight="340" d:DesignWidth="300" Background="White">
+
+    <UserControl.Resources>
+        <system:Int32 x:Key="MinusOne">-1</system:Int32>
+        <converter:VisibilityConverter x:Key="MinusOneVisibilityConverter" Visible="{StaticResource MinusOne}" />
+    </UserControl.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" Grid.ColumnSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="20" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="Публикация" FontWeight="Bold"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Адрес сервера:"/>
+            <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="{Binding ServerName, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Порт сервера:"/>
+            <TextBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="{Binding ServerPort, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Каталог хранения чертежей:"/>
+            <DockPanel Grid.Row="3" Grid.Column="1" >
+                <Button Content="..." Click="Drawing_Click" DockPanel.Dock="Right" />
+                <TextBox HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="{Binding DrawingPath, UpdateSourceTrigger=PropertyChanged}"/>
+            </DockPanel>
+
+            <TextBlock Grid.Row="4" Grid.ColumnSpan="2" Text="Служба" FontWeight="Bold"/>
+            
+            <TextBlock Text="Учетная запись:" Grid.Row="5" Grid.Column="0" />
+            <ComboBox x:Name="UserNameComboBox" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" IsEditable="True" Text="{Binding UserName}">
+                <ComboBoxItem Content="{x:Static pages:PublicationPageViewModel.UserNameLocalSystem}" />
+                <ComboBoxItem Content="{x:Static pages:PublicationPageViewModel.UserNameLocalService}" />
+                <ComboBoxItem Content="{x:Static pages:PublicationPageViewModel.UserNameNetworkService}" />
+            </ComboBox>
+
+            <TextBlock Grid.Row="6" Grid.Column="0" Text="Пароль:"/>
+
+            <PasswordBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2">
+                <PasswordBox.Visibility>
+                    <Binding Path="SelectedIndex" ElementName="UserNameComboBox" Converter="{StaticResource MinusOneVisibilityConverter}" />
+                </PasswordBox.Visibility>
+                <i:Interaction.Behaviors>
+                    <behavior:PasswordBehavior UserPassword="{Binding UserPassword, Mode=TwoWay}" />
+                </i:Interaction.Behaviors>
+            </PasswordBox>
+        </Grid>
+    </Grid>
+</UserControl>

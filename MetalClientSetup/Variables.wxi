@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include>
+  <?define MetalClient_TargetDir=$(var.MetalClient.TargetDir)?>
+  <?define MetalTransport_TargetDir=$(var.MetalTransport.TargetDir)?>
+  <?define MetalDiagnostic_TargetDir=$(var.MetalDiagnostic.TargetDir)?>
+  <?define ProductName="Metal client" ?>
+  <?define ProductVersion="!(bind.FileVersion.MetalTransport.dll)"?>
+  <?define ProductCode="F52630BF-1127-46D2-BA09-3359FA2D4A33"?>
+  <?define UpgradeCode="AA03EF9B-3F21-415F-BB38-F73203E83294"?>
+  <?define Manufacturer="Metal"?>
+  <?define InstallerRegKey="SOFTWARE\Metal\Client"?>
+</Include>

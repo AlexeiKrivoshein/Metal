@@ -1,0 +1,344 @@
+﻿<Window x:Class="MetalClient.frmLimitCard"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MetalClient"
+        xmlns:v="clr-namespace:MetalClient.ValidateRule"
+        xmlns:controls="clr-namespace:MetalClient.Controls"
+        mc:Ignorable="d"
+        Title="Спецификация – лимитная карточка" 
+        Height="750" 
+        Width="850" 
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized"
+        Background="GhostWhite">
+
+    <Window.Resources>
+        <CollectionViewSource x:Key="MaterialCache" Source="{Binding MaterialVM.MaterialCache}" />
+        <local:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition Height="60"></RowDefinition>
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0" IsEnabled="{Binding IsEditing}" DataContext="{Binding MaterialVM}">
+            <TextBlock DockPanel.Dock="Top" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center">Лимитная карточка</TextBlock>
+
+            <Border Style="{StaticResource MainBorderStyle}" DockPanel.Dock="Top">
+                <DockPanel Width="Auto" Height="50" VerticalAlignment="Center">
+                    <Button Style="{StaticResource MainButtonStyle}" Content="Добавить" Command="{Binding AddCommand}" DockPanel.Dock="Left" IsEnabled="{Binding NotIsFactMaterial}"/>
+                    <Button Style="{StaticResource MainButtonStyle}" Content="Удалить" Command="{Binding RemoveCommand}" DockPanel.Dock="Left" IsEnabled="{Binding NotIsFactMaterial}"/>
+                    <Label></Label>
+                </DockPanel>
+            </Border>
+
+            <controls:MDataGrid
+                      ItemsSource="{Binding Elements}"
+                      SelectedItem="{Binding Selected, Mode=TwoWay}">
+                <controls:MDataGrid.Columns>
+                    <DataGridTemplateColumn Header="Наименование&#x0a;материалов" Width="1*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <DockPanel VerticalAlignment="Top">
+                                    <Button Margin="2,0,0,0" DockPanel.Dock="Right" Width="21" Height="21"  Content="..." 
+                                            Command="{Binding DataContext.SelectMaterial, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"></Button>
+                                    <ComboBox Height="21" TabIndex="0"
+                                        SelectedValuePath="Id"
+                                        SelectedValue="{Binding MaterialId, Mode=TwoWay, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}"
+                                        ItemsSource="{Binding DataContext.MaterialVM.MaterialCache, RelativeSource={RelativeSource AncestorType={x:Type Window}}, UpdateSourceTrigger=PropertyChanged}"
+                                        DisplayMemberPath="Name"/>
+                                </DockPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Ед.&#x0a;изм." Width="60">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <DockPanel VerticalAlignment="Top">
+                                    <ComboBox Height="21" TabIndex="1"
+
+                                        SelectedValuePath="Name"
+                                        SelectedValue="{Binding Units, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                              
+                                        ItemsSource="{Binding DataContext.MaterialVM.UnitsCache, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                        DisplayMemberPath="Name"/>
+                                </DockPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Потреб.&#x0a;на ед." Width="60">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox BorderThickness="0" Margin="0" TabIndex="2" HorizontalContentAlignment="Right" MaxLength="10" VerticalAlignment="Top"
+                                         Text="{Binding UsagePerUnits, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                         PreviewTextInput="DoubleValid"
+                                         GotKeyboardFocus="SelectAllOnKeyboardFocus"
+                                         GotMouseCapture="SelectAllOnMouseCapture"
+                                         TextChanged="CalcMaterial"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Потреб.&#x0a;на заказ" Width="60">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox BorderThickness="0" Margin="0" TabIndex="3" HorizontalContentAlignment="Right" MaxLength="10" VerticalAlignment="Top" Background="GhostWhite" IsEnabled="False"
+                                         Text="{Binding UsagePerOrder, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Цена&#x0a;за ед" Width="65">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox BorderThickness="0" Margin="0" TabIndex="4" HorizontalContentAlignment="Right" MaxLength="10" VerticalAlignment="Top"
+                                         Text="{Binding Price, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                         PreviewTextInput="DoubleValid"
+                                         GotKeyboardFocus="SelectAllOnKeyboardFocus"
+                                         GotMouseCapture="SelectAllOnMouseCapture"
+                                         TextChanged="CalcMaterial"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Кратность" Width="70">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox BorderThickness="0" Margin="0" TabIndex="4" HorizontalContentAlignment="Right" MaxLength="10" VerticalAlignment="Top"
+                                         Text="{Binding Multiplicity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                         PreviewTextInput="DoubleValid"
+                                         GotKeyboardFocus="SelectAllOnKeyboardFocus"
+                                         GotMouseCapture="SelectAllOnMouseCapture" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    
+                    <DataGridTemplateColumn Header="Факт. материал" Width="1*"
+                                            Visibility="{Binding IsFact, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneTime}">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ListBox HorizontalAlignment="Stretch" BorderThickness="0"  Padding="0,-2,0,0"
+                                         ItemsSource="{Binding FactMaterials}">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <DockPanel Margin="0,1,0,0">
+                                                <Button Margin="2,0,0,0" DockPanel.Dock="Right" Height="21" Width="21" Content="-" 
+                                                        Command="{Binding DataContext.RemoveFactMaterial, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" CommandParameter="{Binding}"/>
+                                                <Button Margin="2,0,0,0" DockPanel.Dock="Right" Height="21" Width="21" Content="+" 
+                                                        Command="{Binding DataContext.AddFactMaterial, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
+                                                <Button Margin="2,0,0,0" DockPanel.Dock="Right" Height="21" Width="21" Content="..." 
+                                                        Command="{Binding DataContext.SelectFactMaterial, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" CommandParameter="{Binding}"/>
+                                                <ComboBox  Margin="0" Height="21"
+                                                           
+		                                                   SelectedValuePath="Id"
+                                                           SelectedValue="{Binding MaterialId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        
+                                                           ItemsSource="{Binding DataContext.MaterialVM.MaterialCache, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                                           DisplayMemberPath="Name"/>
+                                            </DockPanel>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                    <ListBox.ItemContainerStyle>
+                                        <Style TargetType="ListBoxItem">
+                                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                                            <Setter Property="BorderThickness" Value="0"/>
+                                            <Setter Property="Margin" Value="0"/>
+                                            <Setter Property="Padding" Value="0"/>
+                                        </Style>
+                                    </ListBox.ItemContainerStyle>
+                                </ListBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    
+                    <DataGridTemplateColumn Header="Факт.&#x0a;кол-во" Width="60"
+                                            Visibility="{Binding IsFact, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneTime}">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ListBox HorizontalAlignment="Stretch" BorderThickness="0"  Padding="0,-2,0,0"
+                                        ItemsSource="{Binding FactMaterials}">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <DockPanel Margin="0,1,0,0">
+                                                <TextBox  BorderThickness="0" Margin="0" HorizontalContentAlignment="Right" VerticalAlignment="Top"
+                                                         Text="{Binding Path=Count, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                         PreviewTextInput="DoubleValid"
+                                                         GotKeyboardFocus="SelectAllOnKeyboardFocus"
+                                                         GotMouseCapture="SelectAllOnMouseCapture"/>
+                                            </DockPanel>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                    <ListBox.ItemContainerStyle>
+                                        <Style TargetType="ListBoxItem">
+                                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                                            <Setter Property="BorderThickness" Value="0"/>
+                                            <Setter Property="Margin" Value="0"/>
+                                            <Setter Property="Padding" Value="0"/>
+                                        </Style>
+                                    </ListBox.ItemContainerStyle>
+                                </ListBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    
+                    <DataGridTemplateColumn Header="Цена&#x0a;за ед" Width="65"
+                                            Visibility="{Binding IsFact, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneTime}">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ListBox HorizontalAlignment="Stretch" BorderThickness="0"  Padding="0,-2,0,0"
+                                        ItemsSource="{Binding FactMaterials}">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <DockPanel Margin="0,1,0,0">
+                                                <TextBox  BorderThickness="0" Margin="0" HorizontalContentAlignment="Right" VerticalAlignment="Top"
+                                                         Text="{Binding Path=Price, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                         PreviewTextInput="DoubleValid"
+                                                         GotKeyboardFocus="SelectAllOnKeyboardFocus"
+                                                         GotMouseCapture="SelectAllOnMouseCapture"/>
+                                            </DockPanel>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                    <ListBox.ItemContainerStyle>
+                                        <Style TargetType="ListBoxItem">
+                                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                                            <Setter Property="BorderThickness" Value="0"/>
+                                            <Setter Property="Margin" Value="0"/>
+                                            <Setter Property="Padding" Value="0"/>
+                                        </Style>
+                                    </ListBox.ItemContainerStyle>
+                                </ListBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </controls:MDataGrid.Columns>
+            </controls:MDataGrid>
+        </DockPanel>
+        
+        <DockPanel Grid.Row="1" IsEnabled="{Binding IsEditing}" DataContext="{Binding OperationVM}">
+            <Border Style="{StaticResource MainBorderStyle}" DockPanel.Dock="Top">
+                <DockPanel Width="Auto" Height="50" VerticalAlignment="Center">
+                    <Button Style="{StaticResource MainButtonStyle}" Content="Добавить" Command="{Binding AddCommand}" DockPanel.Dock="Left"/>
+                    <Button Style="{StaticResource MainButtonStyle}" Content="Удалить" Command="{Binding RemoveCommand}" DockPanel.Dock="Left"/>
+                    <Label></Label>
+                </DockPanel>
+            </Border>
+
+            <DataGrid Name="grdOperations"
+                      AutoGenerateColumns="False"
+                      Unloaded="GrdOperations_Unloaded"
+                      CanUserAddRows="False"
+                      ItemsSource="{Binding Elements}"
+                      SelectedItem="{Binding Selected}">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Операция" Width="1*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <DockPanel>
+                                    <Button Margin="2,0,0,0" DockPanel.Dock="Right" Width="21" Height="21" Content="..." 
+                                            Command="{Binding DataContext.SelectOperation, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
+                                    <ComboBox   
+                                        Height="21"
+                                        Background="White"
+
+                                        ItemsSource="{Binding DataContext.OperationVM.OperationCache, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                        SelectedValuePath="Id"
+                                        DisplayMemberPath="Name"
+
+                                        SelectedValue="{Binding OperationId, Mode=TwoWay, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}"/>
+                                </DockPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Время" Width="60">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid Background="White">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <ColumnDefinition Width="5"></ColumnDefinition>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBox Grid.Column="0" BorderThickness="0" Margin="0" MaxLength="3"
+                                             Text="{Binding Path=ElapsedHours, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                             PreviewTextInput="IntValid"
+                                             HorizontalAlignment="Stretch"
+                                             TextAlignment="Right"
+                                             GotKeyboardFocus="SelectAllOnKeyboardFocus"
+                                             GotMouseCapture="SelectAllOnMouseCapture"
+                                             TextChanged="CalcOperation"/>
+                                    <TextBlock Grid.Column="1">:
+                                        <TextBlock.Background>
+                                            <SolidColorBrush Opacity="1.0"/>
+                                        </TextBlock.Background>
+                                    </TextBlock>
+                                    <TextBox Grid.Column="2" BorderThickness="0" Margin="0" MaxLength="2"
+                                             Text="{Binding Path=ElapsedMinutes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                                             PreviewTextInput="IntValid"
+                                             GotKeyboardFocus="SelectAllOnKeyboardFocus"
+                                             GotMouseCapture="SelectAllOnMouseCapture"
+                                             TextChanged="CalcOperation"/>
+                                </Grid>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Стоимость&#x0a;часа" Width="80">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox BorderThickness="0" Margin="0" HorizontalContentAlignment="Right" MaxLength="10" VerticalAlignment="Top"
+                                         Text="{Binding Path=PricePerHour, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                         PreviewTextInput="DoubleValid"
+                                         GotKeyboardFocus="SelectAllOnKeyboardFocus"
+                                         GotMouseCapture="SelectAllOnMouseCapture"
+                                         TextChanged="CalcOperation"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </DockPanel>
+
+        <Border Style="{StaticResource MainBorderStyle}" Grid.Row="2">
+            <Grid Margin="10,0,0,0" Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock FontWeight="Bold">Коэффициент:</TextBlock>
+                <TextBox Grid.Column="1" Width="80" HorizontalAlignment="Left"  HorizontalContentAlignment="Right" MaxLength="4"
+                         Text="{Binding Multiplier, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                         PreviewTextInput="DoubleValid"
+                         IsEnabled="{Binding IsEditing}"
+                         TextChanged="CalcOperation"/>
+                <TextBox Grid.Row="1" Margin="-2" FontWeight="Bold" BorderThickness="0" Background="GhostWhite" Grid.ColumnSpan="2" Text="{Binding TotalString, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            </Grid>
+        </Border>
+
+        <Border Style="{StaticResource MainBorderStyle}" Grid.Row="4">
+            <DockPanel Width="Auto" Height="50" VerticalAlignment="Center">
+                <Button Style="{StaticResource MainButtonStyle}" 
+                        IsEnabled="{Binding IsValid, UpdateSourceTrigger=PropertyChanged}" 
+                        Content="Сохранить"
+                        Command="{Binding SaveCommand}"
+                        IsDefault="True"
+                        DockPanel.Dock="Left" 
+                        Visibility="{Binding IsEditing, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneTime}"/>
+                <Button Style="{StaticResource MainButtonStyle}"
+                        Content="Отмена"
+                        Command="{Binding CancelCommand}"
+                        IsCancel="True"
+                        DockPanel.Dock="Left"/>
+                <Label></Label>
+            </DockPanel>
+        </Border>
+    </Grid>
+</Window>

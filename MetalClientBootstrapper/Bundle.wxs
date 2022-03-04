@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" 
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension" 
+     xmlns:bal="http://schemas.microsoft.com/wix/BalExtension">
+  
+  <Bundle Name="Metal client" 
+          Version="!(bind.packageVersion.MetalClientInstallationPackageId)"
+          Manufacturer="Metal" 
+          UpgradeCode="C82A383C-751A-43B8-90BF-A250F7BC2863">
+    
+    <BootstrapperApplicationRef Id="ManagedBootstrapperApplicationHost" >
+      <Payload SourceFile="..\MetalClientSetupWPF\BootstrapperCore.config"/>
+      <Payload SourceFile="$(var.MetalClientSetupWPF.TargetDir)\MetalClientSetupWPF.dll"/>
+      <Payload SourceFile="$(var.MetalClientSetupWPF.TargetDir)\GalaSoft.MvvmLight.dll"/>
+      <Payload SourceFile="$(var.MetalClientSetupWPF.TargetDir)\GalaSoft.MvvmLight.Extras.dll"/>
+      <Payload SourceFile="$(var.MetalClientSetupWPF.TargetDir)\MetalTransport.dll"/>
+      <Payload SourceFile="C:\Program Files (x86)\WiX Toolset v3.11\SDK\Microsoft.Deployment.WindowsInstaller.dll"/>
+    </BootstrapperApplicationRef>
+    <WixVariable Id="WixMbaPrereqPackageId" Value="Netfx4Full" />
+    <WixVariable Id="WixMbaPrereqLicenseUrl" Value="NetfxLicense.rtf" />
+    <Chain>
+      <MsiPackage Id="MetalClientInstallationPackageId" DisplayName="Metal client" SourceFile="$(var.MetalClientSetup.TargetDir)MetalClientSetup.msi"
+                  Visible="no" DisplayInternalUI="no" Permanent="no" Compressed="yes" EnableFeatureSelection="yes" Cache="yes" ForcePerMachine="yes">
+        <MsiProperty Name="SERVER_NAME" Value="[ServerName]"/>
+        <MsiProperty Name="SERVER_PORT" Value="[ServerPort]"/>
+      </MsiPackage>
+    </Chain>
+
+    <Variable Name="ServerName" Type="string" Value="127.0.07" bal:Overridable="yes" />
+    <Variable Name="ServerPort" Type="string" Value="9500" bal:Overridable="yes" />
+
+  </Bundle>
+</Wix>

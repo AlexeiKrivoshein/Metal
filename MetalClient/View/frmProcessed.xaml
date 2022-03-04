@@ -1,0 +1,18 @@
+﻿<Window x:Class="MetalClient.frmProcessed"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="{Binding Title, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" ResizeMode="NoResize" Height="90" Width="700" BorderThickness="2" WindowStyle="None" WindowStartupLocation="CenterScreen" Background="GhostWhite" BorderBrush="Black">
+    <DockPanel VerticalAlignment="Stretch" Width="680" Height="80">
+        <TextBlock DockPanel.Dock="Top" FontWeight="Bold" HorizontalAlignment="Center"
+                    Text="{Binding Header, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Window}}, UpdateSourceTrigger=PropertyChanged}"/>
+        <Button Style="{StaticResource MainButtonStyle}" Margin="5,0,5,0" DockPanel.Dock="Right" Content="Отмена" Click="Cancel_Click"/>
+        <Border Style="{StaticResource MainBorderStyle}" Height="40">
+            <Canvas Name="cnvProgress" Background="GhostWhite">
+                <Rectangle x:Name="rctProgress" Height="40" Fill="Green" HorizontalAlignment="Left" VerticalAlignment="Center" Width="80"></Rectangle>
+            </Canvas>
+        </Border>
+    </DockPanel>
+</Window>

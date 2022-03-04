@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include>
+  <?define MetalServer_TargetDir=$(var.MetalServer.TargetDir)?>
+  <?define MetalDAL_TargetDir=$(var.MetalDAL.TargetDir)?>
+  <?define MetalTransport_TargetDir=$(var.MetalTransport.TargetDir)?>
+  <?define MetalDiagnostic_TargetDir=$(var.MetalDiagnostic.TargetDir)?>
+  <?define WixAdditionalTools_TargetDir=$(var.WixAdditionalTools.TargetDir)?>
+  <?define ProductName="Metal server"?>
+  <?define ProductVersion="!(bind.FileVersion.MetalTransport.dll)"?>
+  <?define ProductCode="9ABB0563-3C7F-429A-B06F-B9B1B610B070"?>
+  <?define UpgradeCode="943a1bb4-e17b-4794-97b5-6557230c89d0"?>
+  <?define Manufacturer="Metal"?>
+  <?define InstallerRegKey="SOFTWARE\Metal\Server"?>
+</Include>

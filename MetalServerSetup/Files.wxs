@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+  <?include Variables.wxi?>
+  
+  <Fragment>
+    <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <Component Id="MetalServer.exe" Guid="633d59e7-6908-4535-a7f1-65e45898ea83">
+        <File Id="MetalServer.exe" Name="MetalServer.exe" Source="$(var.MetalServer_TargetDir)MetalServer.exe" />
+      </Component>
+      <Component Id="MetalServer.exe.config" Guid="c5726b6d-79e6-4ba0-8220-a8a0b76f94e8">
+        <File Id="MetalServer.exe.config" Name="MetalServer.exe.config" Source="$(var.MetalServer_TargetDir)MetalServer.exe.config" />
+        <util:XmlFile Id="UpdateServerName" Action="setValue" File="[INSTALLFOLDER]MetalServer.exe.config" SelectionLanguage="XPath" Permanent="yes"
+                      ElementPath="/configuration/appSettings/add[\[]@key='ServerName'[\]]" Name="value" Value="[SERVER_NAME]"/>
+        <util:XmlFile Id="UpdateServerPort" Action="setValue" File="[INSTALLFOLDER]MetalServer.exe.config" SelectionLanguage="XPath" Permanent="yes"
+                      ElementPath="/configuration/appSettings/add[\[]@key='Port'[\]]" Name="value" Value="[SERVER_PORT]"/>
+        <util:XmlFile Id="UpdateDrawingPath" Action="setValue" File="[INSTALLFOLDER]MetalServer.exe.config" SelectionLanguage="XPath" Permanent="yes"
+                      ElementPath="/configuration/appSettings/add[\[]@key='DrawingPath'[\]]" Name="value" Value="[DRAWING_PATH]"/>
+        <util:XmlFile Id="UpdateConnectionString" Action="setValue" File="[INSTALLFOLDER]MetalServer.exe.config" SelectionLanguage="XPath" Permanent="yes"
+                      ElementPath="/configuration/connectionStrings/add[\[]@name='MetalEDMContainer'[\]]" Name="connectionString" Value="[SQL_CONNECTION_STRING]"/>
+      </Component>
+      <Component Id="MetalDAL.dll" Guid="30ca3d51-a3c2-4e55-ad1a-5118970c5e76">
+        <File Id="MetalDAL.dll" Name="MetalDAL.dll" Source="$(var.MetalDAL_TargetDir)MetalDAL.dll" />
+      </Component>
+      <Component Id="EntityFramework.SqlServer.dll" Guid="8E592C8A-1021-451D-AB65-92980D2A9C2F">
+        <File Id="EntityFramework.SqlServer.dll" Name="EntityFramework.SqlServer.dll" Source="$(var.MetalDAL_TargetDir)EntityFramework.SqlServer.dll" />
+      </Component>
+      <Component Id="EntityFramework.SqlServer.xml" Guid="8F59284C-533A-4A1A-AB67-FD7C68BFF921">
+        <File Id="EntityFramework.SqlServer.xml" Name="EntityFramework.SqlServer.xml" Source="$(var.MetalDAL_TargetDir)EntityFramework.SqlServer.xml" />
+      </Component>
+      <Component Id="MetalTransport.dll" Guid="fba488f2-f936-4590-8e5e-330fae9c8b32">
+        <File Id="MetalTransport.dll" Name="MetalTransport.dll" Source="$(var.MetalTransport_TargetDir)MetalTransport.dll" />
+      </Component>
+      <Component Id="Newtonsoft.Json.dll" Guid="513056ef-ae25-4e59-bec0-cf1d8b3760a2">
+        <File Id="Newtonsoft.Json.dll" Name="Newtonsoft.Json.dll" Source="$(var.MetalTransport_TargetDir)Newtonsoft.Json.dll" />
+      </Component>
+      <Component Id="MetalDiagnostic.dll" Guid="ca7e8cfa-f1d5-4f3f-9f66-fec59f6660db">
+        <File Id="MetalDiagnostic.dll" Name="MetalDiagnostic.dll" Source="$(var.MetalDiagnostic_TargetDir)MetalDiagnostic.dll" />
+      </Component>
+      <Component Id="log4net.dll" Guid="a9f8668a-0b8f-43c5-b688-552e0d1edc22">
+        <File Id="log4net.dll" Name="log4net.dll" Source="$(var.MetalServer_TargetDir)log4net.dll" />
+      </Component>
+      <Component Id="EntityFramework.dll" Guid="563104ef-2603-4fcd-9e37-b80b267c07aa">
+        <File Id="EntityFramework.dll" Name="EntityFramework.dll" Source="$(var.MetalServer_TargetDir)EntityFramework.dll" />
+      </Component>
+      <Component Id="AutoMapper.dll" Guid="cad6bbb9-ff2d-4b39-8640-25823a67b51e">
+        <File Id="AutoMapper.dll" Name="AutoMapper.dll" Source="$(var.MetalServer_TargetDir)AutoMapper.dll" />
+      </Component>
+      <Component Id="WixAdditionalTools.dll" Guid="b626d7e1-f4e9-420d-aff8-39e3b3676311">
+        <File Id="WixAdditionalTools.dll" Name="WixAdditionalTools.dll" Source="$(var.WixAdditionalTools_TargetDir)WixAdditionalTools.dll" />
+      </Component>
+      <Component Id="Microsoft.Deployment.WindowsInstaller.dll" Guid="fc7779d6-0344-4550-b029-2c68148bbb26">
+        <File Id="Microsoft.Deployment.WindowsInstaller.dll" Name="Microsoft.Deployment.WindowsInstaller.dll" Source="$(var.WixAdditionalTools_TargetDir)Microsoft.Deployment.WindowsInstaller.dll" />
+      </Component>
+      <Component Id="CustomAction.config" Guid="62b8761e-be00-4832-9cf2-87d5d6205076">
+        <File Id="CustomAction.config" Name="CustomAction.config" Source="$(var.WixAdditionalTools_TargetDir)CustomAction.config" />
+      </Component>
+      <Component Id="Model_MetalContext.Context.tt" Guid="ca23e796-ab3e-4119-883c-cf6afda25948">
+        <File Id="Model_MetalContext.Context.tt" Name="MetalContext.Context.tt" Source="$(var.MetalDAL_TargetDir)Model\MetalContext.Context.tt" />
+      </Component>
+      <Component Id="Model_MetalContext.tt" Guid="bb00cb9a-9aab-4877-bb0e-4e70ab2c927e">
+        <File Id="Model_MetalContext.tt" Name="MetalContext.tt" Source="$(var.MetalDAL_TargetDir)Model\MetalContext.tt" />
+      </Component>
+      <Component Id="Model_MetalEDM.edmx.sql" Guid="d11229ff-0c76-4d54-b3a6-eefe400beb4c">
+        <File Id="Model_MetalEDM.edmx.sql" Name="MetalEDM.edmx.sql" Source="$(var.MetalDAL_TargetDir)Model\MetalEDM.edmx.sql" />
+      </Component>
+      <Component Id="SaveRegistry" Guid="B82B0794-D85A-46F6-B5E9-698828F7F40D">
+        <RegistryKey Root="HKLM" Key="$(var.InstallerRegKey)">
+          <RegistryValue Name="Version" Value="[CURRENT_VERSION]" Type="string" />
+        </RegistryKey>
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

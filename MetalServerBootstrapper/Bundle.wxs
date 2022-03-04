@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension"
+     xmlns:bal="http://schemas.microsoft.com/wix/BalExtension">
+  
+	<Bundle Name="Metal server" 
+          Version="!(bind.packageVersion.MetalServerInstallationPackageId)"
+          Manufacturer="Metal" 
+          UpgradeCode="8c01f6a9-93e8-479f-a15e-bf3b31ee8f12">
+
+    <BootstrapperApplicationRef Id="ManagedBootstrapperApplicationHost">
+      <Payload SourceFile="..\MetalServerSetupWPF\BootstrapperCore.config"/>
+      <Payload SourceFile="$(var.MetalServerSetupWPF.TargetDir)\System.Windows.Interactivity.dll"/>
+      <Payload SourceFile="$(var.MetalServerSetupWPF.TargetDir)\MetalServerSetupWPF.dll"/>
+      <Payload SourceFile="$(var.MetalServerSetupWPF.TargetDir)\GalaSoft.MvvmLight.dll"/>
+      <Payload SourceFile="$(var.MetalServerSetupWPF.TargetDir)\GalaSoft.MvvmLight.Extras.dll"/>
+      <Payload SourceFile="$(var.MetalServerSetupWPF.TargetDir)\MetalTransport.dll"/>
+      <Payload SourceFile="C:\Program Files (x86)\WiX Toolset v3.11\SDK\Microsoft.Deployment.WindowsInstaller.dll"/>
+    </BootstrapperApplicationRef>
+    <WixVariable Id="WixMbaPrereqPackageId" Value="Netfx4Full" />
+    <WixVariable Id="WixMbaPrereqLicenseUrl" Value="NetfxLicense.rtf" />
+    <Chain>
+      <MsiPackage Id="MetalServerInstallationPackageId" DisplayName="Metal server" SourceFile="$(var.MetalServerSetup.TargetDir)MetalServerSetup.msi"
+                  Visible="no" DisplayInternalUI="no" Permanent="no" Compressed="yes" EnableFeatureSelection="yes" Cache="yes" ForcePerMachine="yes">
+        <MsiProperty Name="SERVER_NAME" Value="[ServerName]"/>
+        <MsiProperty Name="SERVER_PORT" Value="[ServerPort]"/>
+        <MsiProperty Name="DRAWING_PATH" Value="[DrawingPath]"/>
+        <MsiProperty Name="USER_NAME" Value="[UserName]"/>
+        <MsiProperty Name="USER_PASSWORD" Value="[UserPassword]"/>
+
+        <MsiProperty Name="SQL_INTEGRATED" Value="[SQLIntegrated]"/>
+        <MsiProperty Name="SQL_SERVER_NAME" Value="[SQLServerName]"/>
+        <MsiProperty Name="SQL_USER_NAME" Value="[SQLUserName]"/>
+        <MsiProperty Name="SQL_USER_PASSWORD" Value="[SQLUserPassword]"/>
+        <MsiProperty Name="SQL_CONNECTION_STRING" Value="[SQLConnectionString]"/>
+      </MsiPackage>
+    </Chain>
+
+    <Variable Name="ServerName" Type="string" Value="127.0.0.1" bal:Overridable="yes" />
+    <Variable Name="ServerPort" Type="string" Value="9500" bal:Overridable="yes" />
+    <Variable Name="DrawingPath" Type="string" Value="" bal:Overridable="yes" />
+    <Variable Name="UserName" Type="string" Value="LocalSystem" bal:Overridable="yes" />
+    <Variable Name="UserPassword" Type="string" Value="" bal:Overridable="yes" />
+
+    <Variable Name="SQLIntegrated" Type="string" Value="Windows" bal:Overridable="yes"/>
+    <Variable Name="SQLServerName" Type="string" Value="(local)\SQLEXPRESS" bal:Overridable="yes"/>
+    <Variable Name="SQLUserName" Type="string" Value="" bal:Overridable="yes"/>
+    <Variable Name="SQLUserPassword" Type="string" Value="" bal:Overridable="yes"/>
+    <Variable Name="SQLConnectionString" Type="string" Value="" bal:Overridable="yes"/>
+  </Bundle>
+</Wix>

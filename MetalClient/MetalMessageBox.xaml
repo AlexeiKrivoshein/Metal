@@ -1,0 +1,30 @@
+﻿<Window x:Class="MetalClient.MetalMessageBox"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MetalClient"
+        mc:Ignorable="d"
+        Height="200" Width="350" ResizeMode="NoResize" Background="GhostWhite" WindowStartupLocation="CenterOwner"
+        Title="{Binding Caption, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Window}}, UpdateSourceTrigger=PropertyChanged}">
+    <DockPanel>
+        <Border DockPanel.Dock="Bottom" Style="{StaticResource MainBorderStyle}">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Style="{StaticResource MainButtonStyle}" Content="ОК" Margin="5" Name="btnOk" Click="OK_Click" IsDefault="True"/>
+                <Button Style="{StaticResource MainButtonStyle}" Content="Да" Margin="5" Name="btnYes" Click="Yes_Click" IsDefault="True"/>
+                <Button Style="{StaticResource MainButtonStyle}" Content="Нет" Margin="5" Name="btnNo" Click="No_Click" IsCancel="True"/>
+                <Button Style="{StaticResource MainButtonStyle}" Content="Отмена" Margin="5" Name="btnCancel" Click="Cancel_Click" IsCancel="True"/>
+            </StackPanel>
+        </Border>
+
+        <Border DockPanel.Dock="Bottom" Style="{StaticResource MainBorderStyle}">
+            <DockPanel >
+                <Image Name="Pic" Margin="20,0,0,0" DockPanel.Dock="Left" Width="50" Height="50"/>
+                <StackPanel Margin="10" VerticalAlignment="Center">
+                    <TextBlock FontWeight="Bold" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextWrapping="Wrap"
+                       Text="{Binding Message, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Window}}, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+            </DockPanel>
+        </Border>
+    </DockPanel>
+</Window>

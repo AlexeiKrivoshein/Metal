@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{022CCB40-04FA-4B99-966F-B1008A390FE8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MetalServerSetupWPF</RootNamespace>
+    <AssemblyName>MetalServerSetupWPF</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BootstrapperCore, Version=3.0.0.0, Culture=neutral, PublicKeyToken=ce35f76fcda82bad, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\WiX Toolset v3.11\SDK\BootstrapperCore.dll</HintPath>
+    </Reference>
+    <Reference Include="CommonServiceLocator, Version=2.0.6.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.2.0.6\lib\net46\CommonServiceLocator.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight, Version=5.4.1.0, Culture=neutral, PublicKeyToken=e7570ab207bcb616, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Extras, Version=5.4.1.0, Culture=neutral, PublicKeyToken=669f0b5e8f868abf, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.Extras.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices.AccountManagement" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Behaviors\PasswordBehavior.cs" />
+    <Compile Include="BootstrapperInstaller.cs" />
+    <Compile Include="BootstrapperVariables.cs" />
+    <Compile Include="Converters\IntToBoolenConverter.cs" />
+    <Compile Include="Converters\VisibilityConverter.cs" />
+    <Compile Include="DisplayNameAttribute.cs" />
+    <Compile Include="EnumConverter.cs" />
+    <Compile Include="EnumHelper.cs" />
+    <Compile Include="EnumToItemsSource.cs" />
+    <Compile Include="IVariableSource.cs" />
+    <Compile Include="MainForm.xaml.cs">
+      <DependentUpon>MainForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Messages\CancelInstallMessage.cs" />
+    <Compile Include="Messages\CancelMessage.cs" />
+    <Compile Include="Messages\CancelUninstallMessage.cs" />
+    <Compile Include="Messages\CloseAppMessage.cs" />
+    <Compile Include="Messages\ErrorMessage.cs" />
+    <Compile Include="Messages\NextMessage.cs" />
+    <Compile Include="Messages\PrevMessage.cs" />
+    <Compile Include="Messages\UninstallMessage.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VariablesSource.cs" />
+    <Compile Include="ViewModel\CommandViewModel.cs" />
+    <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\Pages\CancelPageViewModel.cs" />
+    <Compile Include="ViewModel\Pages\DataBasePageViewModel.cs" />
+    <Compile Include="ViewModel\Pages\PublicationPageViewModel.cs" />
+    <Compile Include="ViewModel\Pages\ErrorPageViewModel.cs" />
+    <Compile Include="ViewModel\Pages\InstallPageViewModel.cs" />
+    <Compile Include="ViewModel\Pages\ReadyPageViewModel.cs" />
+    <Compile Include="ViewModel\Pages\UninstallPageViewModel.cs" />
+    <Compile Include="ViewModel\Pages\WelcomePageViewModel.cs" />
+    <Compile Include="ViewModel\PageViewModel.cs" />
+    <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="View\Page\CancelPageView.xaml.cs">
+      <DependentUpon>CancelPageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page\DataBasePage.xaml.cs">
+      <DependentUpon>DataBasePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page\PublicationPage.xaml.cs">
+      <DependentUpon>PublicationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page\ErrorPageView.xaml.cs">
+      <DependentUpon>ErrorPageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page\InstallPage.xaml.cs">
+      <DependentUpon>InstallPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page\ReadyPageView.xaml.cs">
+      <DependentUpon>ReadyPageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page\UninstallPageView.xaml.cs">
+      <DependentUpon>UninstallPageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page\WelcomePageView.xaml.cs">
+      <DependentUpon>WelcomePageView.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\MetalLogoInstaller.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="MainForm.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Page\CancelPageView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Page\DataBasePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Page\PublicationPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Page\ErrorPageView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Page\InstallPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Page\ReadyPageView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Page\UninstallPageView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Page\WelcomePageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="BootstrapperCore.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MetalTransport\MetalTransport.csproj">
+      <Project>{7270aa44-a7d9-4383-85a4-f0a98ab98617}</Project>
+      <Name>MetalTransport</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

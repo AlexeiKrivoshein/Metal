@@ -1,0 +1,89 @@
+﻿<Window x:Class="MetalClientSetupWPF.MainForm"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:setupvm="clr-namespace:MetalClientSetupWPF.ViewModel"
+             xmlns:pages="clr-namespace:MetalClientSetupWPF.View.Page"
+             xmlns:pagesvm="clr-namespace:MetalClientSetupWPF.ViewModel.Pages"
+             mc:Ignorable="d" 
+             FontFamily="Tahoma" Width="600" Height="400" ResizeMode="NoResize"
+             WindowStartupLocation="CenterScreen">
+
+    <d:DesignInstance.DataContext>
+        <setupvm:MainViewModel>
+            <setupvm:MainViewModel.SelectedPage>
+                <pagesvm:ConfigurationPageViewModel>
+                    <pagesvm:ConfigurationPageViewModel.Commands>
+                        <setupvm:CommandViewModel DisplayName="НАЗАД" />
+                        <setupvm:CommandViewModel DisplayName="ДАЛЕЕ" />
+                        <setupvm:CommandViewModel DisplayName="ОТМЕНА" />
+                    </pagesvm:ConfigurationPageViewModel.Commands>
+                </pagesvm:ConfigurationPageViewModel>
+            </setupvm:MainViewModel.SelectedPage>
+            <setupvm:MainViewModel.Pages>
+                <pagesvm:WelcomePageViewModel Success="True" />
+                <pagesvm:ConfigurationPageViewModel Success="True" />
+                <pagesvm:InstallPageViewModel/>
+                <pagesvm:ReadyPageViewModel/>
+                <pagesvm:ErrorPageViewModel/>
+                <pagesvm:CancelPageViewModel/>
+                <pagesvm:UninstallPageViewModel/>
+            </setupvm:MainViewModel.Pages>
+        </setupvm:MainViewModel>
+    </d:DesignInstance.DataContext>
+    
+     <Window.Resources>
+        <ResourceDictionary>
+            <DataTemplate DataType="{x:Type pagesvm:WelcomePageViewModel}">
+                <pages:WelcomePageView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type pagesvm:ConfigurationPageViewModel}">
+                <pages:ConfigurationPage />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type pagesvm:InstallPageViewModel}">
+                <pages:InstallPage />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type pagesvm:ReadyPageViewModel}">
+                <pages:ReadyPageView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type pagesvm:ErrorPageViewModel}">
+                <pages:ErrorPageView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type pagesvm:CancelPageViewModel}">
+                <pages:CancelPageView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type pagesvm:UninstallPageViewModel}">
+                <pages:UninstallPageView />
+            </DataTemplate>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MetalClientSetupWPF;component/Styles.xaml" />
+                <ResourceDictionary Source="Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="58" />
+            <RowDefinition Height="48" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="58" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="183" />
+        </Grid.ColumnDefinitions>
+
+        <Image Style="{DynamicResource MetalLogoImageStyle}" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" />
+
+        <TextBlock Style="{DynamicResource PageHeaderTextBlockStyle}" Grid.Row="0" Grid.Column="0" Text="{Binding SelectedPage.Header}" />
+        <Separator Style="{DynamicResource PageSeparatorStyle}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" />
+        <TextBlock Style="{DynamicResource PageDescriptionTextBlockStyle}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding SelectedPage.Description}" />
+        <ContentControl Style="{DynamicResource PageContentControlStyle}" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Content="{Binding SelectedPage}" />
+        <ItemsControl Style="{DynamicResource ButtonListItemsControlStyle}" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding SelectedPage.Commands}" />
+
+    </Grid>
+</Window>
