@@ -57,8 +57,6 @@ namespace MetalClient.Controls
             }
         }
 
-        public string FormatString => IsTimePickerVisibility ? "dd.MM.yyyy HH:mm" : "dd.MM.yyyy";
-
         static MDatePicker()
         {
             DateProperty = DependencyProperty.Register(
@@ -87,6 +85,19 @@ namespace MetalClient.Controls
         public void ShowCalendar(object sender, MouseButtonEventArgs e)
         {
             calendar.IsOpen = true;
+        }
+    }
+
+    public class ButtonMarginConverter : IValueConverter
+    {
+        public object Convert(object value, System.Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return new Thickness(System.Convert.ToDouble(value) * -1, 0, 0, 0);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return null;
         }
     }
 }

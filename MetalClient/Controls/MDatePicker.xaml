@@ -3,20 +3,64 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:MetalClient.Controls"
              xmlns:client="clr-namespace:MetalClient"
+             xmlns:local="clr-namespace:MetalClient.Controls"
              mc:Ignorable="d" 
              xmlns:wpfTool="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <client:DateToDate x:Key="DateToDate"/>
         <client:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <local:ButtonMarginConverter x:Key="ButtonMarginConverter"/>
     </UserControl.Resources>
 
-    <DockPanel>
+    <StackPanel Orientation="Horizontal"
+                Width="{Binding Width, 
+                    RelativeSource={RelativeSource AncestorType=UserControl}}">
+        <wpfTool:DateTimePicker
+            BorderThickness="{Binding Border, 
+                RelativeSource={RelativeSource AncestorType=UserControl}}"
+            Name="calendar"
+            FontSize="14"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Stretch"
+            TextAlignment="Left"
+            Format="Custom"
+            TimeFormat="Custom"
+            TimeFormatString="HH:mm"
+            Kind="Local"
+            TimePickerVisibility="{Binding IsTimePickerVisibility, 
+                RelativeSource={RelativeSource AncestorType=UserControl}, 
+                Converter={StaticResource BoolToVisibilityConverter}, Mode=OneTime}"
+            ShowDropDownButton="False"
+            ShowButtonSpinner="False"
+            AutoCloseCalendar="True"
+			Value="{Binding Date, 
+                RelativeSource={RelativeSource AncestorType=UserControl}, 
+                Mode=TwoWay, 
+                Converter={StaticResource DateToDate}}"
+        >
+            <wpfTool:DateTimePicker.Style>
+                <Style TargetType="{x:Type wpfTool:DateTimePicker}">
+                    <Style.Setters>
+                        <Setter Property="FormatString" Value="dd.MM.yyyy"/>
+                        <Setter Property="MinWidth" Value="100"/>
+                    </Style.Setters>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsTimePickerVisibility, 
+                            RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
+                            <Setter Property="FormatString" Value="dd.MM.yyyy HH:mm"></Setter>
+                            <Setter Property="MinWidth" Value="140"></Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </wpfTool:DateTimePicker.Style>
+        </wpfTool:DateTimePicker>
+
         <Button
-            DockPanel.Dock="Right"
-            Height="{Binding ElementName=calendar, Path=ActualHeight}"
+            BorderThickness="0"
+            Height="{Binding ActualHeight, ElementName=calendar}"
+            Margin="{Binding ActualHeight, RelativeSource={RelativeSource Self}, Converter={StaticResource ButtonMarginConverter}}"
             Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
             Background="Transparent"
             Command="{Binding ShowCalendarCommand, 
@@ -24,35 +68,5 @@
             <Image  Source="..\Resources\calendar.png" Stretch="Uniform"/>
         </Button>
 
-        <Border Name="border" BorderThickness="0">
-            <wpfTool:DateTimePicker 
-                BorderThickness="{Binding Border, 
-                    RelativeSource={RelativeSource AncestorType=UserControl}}"
-                Name="calendar"
-                FontSize="14"
-                VerticalAlignment="Center"
-                HorizontalAlignment="Left"
-                TextAlignment="Left"
-                Format="Custom"
-                FormatString="{Binding FormatString, 
-                    RelativeSource={RelativeSource AncestorType=UserControl}}"
-                TimeFormat="Custom"
-                TimeFormatString="HH:mm"
-                Kind="Local"
-                TimePickerVisibility="{Binding IsTimePickerVisibility, 
-                    RelativeSource={RelativeSource AncestorType=UserControl}, 
-                    Converter={StaticResource BoolToVisibilityConverter}, Mode=OneTime}"
-                ShowDropDownButton="False"
-                ShowButtonSpinner="False"
-                AutoCloseCalendar="True"
-                Width="{Binding ElementName=border, Path=ActualWidth}"
-			    Value="{Binding Date, 
-                    RelativeSource={RelativeSource AncestorType=UserControl}, 
-                    Mode=TwoWay, 
-                    Converter={StaticResource DateToDate}}"
-            >
-            </wpfTool:DateTimePicker>
-        </Border>
-
-    </DockPanel>
+    </StackPanel>
 </UserControl>
