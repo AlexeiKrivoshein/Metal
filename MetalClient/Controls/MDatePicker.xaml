@@ -4,26 +4,22 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:client="clr-namespace:MetalClient"
-             xmlns:local="clr-namespace:MetalClient.Controls"
              mc:Ignorable="d" 
              xmlns:wpfTool="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <client:DateToDate x:Key="DateToDate"/>
         <client:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
-        <local:ButtonMarginConverter x:Key="ButtonMarginConverter"/>
     </UserControl.Resources>
 
-    <StackPanel Orientation="Horizontal"
-                Width="{Binding Width, 
-                    RelativeSource={RelativeSource AncestorType=UserControl}}">
+    <Grid>
         <wpfTool:DateTimePicker
+            VerticalAlignment="Stretch"
+            HorizontalAlignment="Stretch"
             BorderThickness="{Binding Border, 
                 RelativeSource={RelativeSource AncestorType=UserControl}}"
             Name="calendar"
             FontSize="14"
-            VerticalAlignment="Center"
-            HorizontalAlignment="Stretch"
             TextAlignment="Left"
             Format="Custom"
             TimeFormat="Custom"
@@ -59,14 +55,14 @@
 
         <Button
             BorderThickness="0"
+            HorizontalAlignment="Right"
             Height="{Binding ActualHeight, ElementName=calendar}"
-            Margin="{Binding ActualHeight, RelativeSource={RelativeSource Self}, Converter={StaticResource ButtonMarginConverter}}"
             Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
             Background="Transparent"
             Command="{Binding ShowCalendarCommand, 
                 RelativeSource={RelativeSource AncestorType=UserControl}}">
             <Image  Source="..\Resources\calendar.png" Stretch="Uniform"/>
         </Button>
-
-    </StackPanel>
+    </Grid>
 </UserControl>
+

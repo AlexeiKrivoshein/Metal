@@ -22,7 +22,7 @@ namespace MetalTransport.ModelEx
             set
             {
                 _dateFrom = value;
-                OnPropertyChanged("DateFrom");
+                OnPropertyChanged(nameof(DateFrom));
             }
         }
 
@@ -36,7 +36,7 @@ namespace MetalTransport.ModelEx
             set
             {
                 _dateTo = value;
-                OnPropertyChanged("DateTo");
+                OnPropertyChanged(nameof(DateTo));
             }
         }
 
@@ -50,7 +50,7 @@ namespace MetalTransport.ModelEx
             set
             {
                 _numberFrom = value;
-                OnPropertyChanged("NumberFrom");
+                OnPropertyChanged(nameof(NumberFrom));
             }
         }
 
@@ -64,11 +64,11 @@ namespace MetalTransport.ModelEx
             set
             {
                 _numberTo = value;
-                OnPropertyChanged("NumberTo");
+                OnPropertyChanged(nameof(NumberTo));
             }
         }
 
-        private Guid _orderGroupId;
+        private Guid _orderGroupId = Guid.Empty;
         /// <summary>
         /// Идентификатор группы заказов
         /// </summary>
@@ -78,7 +78,7 @@ namespace MetalTransport.ModelEx
             set
             {
                 _orderGroupId = value;
-                OnPropertyChanged("OrderGroupId");
+                OnPropertyChanged(nameof(OrderGroupId));
             }
         }
 
@@ -92,7 +92,7 @@ namespace MetalTransport.ModelEx
             set
             {
                 _name = value;
-                OnPropertyChanged("Name");
+                OnPropertyChanged(nameof(Name));
             }
         }
 
@@ -106,7 +106,7 @@ namespace MetalTransport.ModelEx
             set
             {
                 _countFrom = value;
-                OnPropertyChanged("CountFrom");
+                OnPropertyChanged(nameof(CountFrom));
             }
         }
 
@@ -120,11 +120,11 @@ namespace MetalTransport.ModelEx
             set
             {
                 _countTo = value;
-                OnPropertyChanged("CountTo");
+                OnPropertyChanged(nameof(CountTo));
             }
         }
 
-        private Guid _customerId;
+        private Guid _customerId = Guid.Empty;
         /// <summary>
         /// Идентификатор заказчика
         /// </summary>
@@ -134,7 +134,7 @@ namespace MetalTransport.ModelEx
             set
             {
                 _customerId = value;
-                OnPropertyChanged("CustomerId");
+                OnPropertyChanged(nameof(CustomerId));
             }
         }
 
@@ -148,7 +148,7 @@ namespace MetalTransport.ModelEx
             set
             {
                 _orderStateFrom = value;
-                OnPropertyChanged("OrderStateFrom");
+                OnPropertyChanged(nameof(OrderStateFrom));
             }
         }
 
@@ -162,7 +162,7 @@ namespace MetalTransport.ModelEx
             set
             {
                 _orderStateTo = value;
-                OnPropertyChanged("OrderStateTo");
+                OnPropertyChanged(nameof(OrderStateTo));
             }
         }
 
@@ -176,7 +176,7 @@ namespace MetalTransport.ModelEx
             set
             {
                 _сalcPriceFrom = value;
-                OnPropertyChanged("CalcPriceFrom");
+                OnPropertyChanged(nameof(CalcPriceFrom));
             }
         }
 
@@ -190,7 +190,7 @@ namespace MetalTransport.ModelEx
             set
             {
                 _сalcPriceTo = value;
-                OnPropertyChanged("CalcPriceTo");
+                OnPropertyChanged(nameof(CalcPriceTo));
             }
         }
 
@@ -204,7 +204,7 @@ namespace MetalTransport.ModelEx
             set
             {
                 _expectedPriceFrom = value;
-                OnPropertyChanged("ExpectedPriceFrom");
+                OnPropertyChanged(nameof(ExpectedPriceFrom));
             }
         }
 
@@ -218,7 +218,7 @@ namespace MetalTransport.ModelEx
             set
             {
                 _expectedPriceTo = value;
-                OnPropertyChanged("ExpectedPriceTo");
+                OnPropertyChanged(nameof(ExpectedPriceTo));
             }
         }
 
@@ -232,7 +232,7 @@ namespace MetalTransport.ModelEx
             set
             {
                 _salesPriceFrom = value;
-                OnPropertyChanged("SalesPriceFrom");
+                OnPropertyChanged(nameof(SalesPriceFrom));
             }
         }
 
@@ -246,7 +246,7 @@ namespace MetalTransport.ModelEx
             set
             {
                 _salesPriceTo = value;
-                OnPropertyChanged("SalesPriceTo");
+                OnPropertyChanged(nameof(SalesPriceTo));
             }
         }
 
@@ -260,7 +260,7 @@ namespace MetalTransport.ModelEx
             set
             {
                 _readyDateFrom = value;
-                OnPropertyChanged("ReadyDateFrom");
+                OnPropertyChanged(nameof(ReadyDateFrom));
             }
         }
 
@@ -274,7 +274,7 @@ namespace MetalTransport.ModelEx
             set
             {
                 _readyDateTo = value;
-                OnPropertyChanged("ReadyDateTo");
+                OnPropertyChanged(nameof(ReadyDateTo));
             }
         }
 
@@ -288,7 +288,7 @@ namespace MetalTransport.ModelEx
             set
             {
                 _sort = value;
-                OnPropertyChanged("Sort");
+                OnPropertyChanged(nameof(Sort));
             }
         }
     }

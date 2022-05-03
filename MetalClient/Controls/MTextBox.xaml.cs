@@ -56,7 +56,7 @@ namespace MetalClient.Controls
 
         public HorizontalAlignment TextAlignment 
         {
-            get => Format == TextBoxFormats.Currency ? HorizontalAlignment.Right : HorizontalAlignment.Left;
+            get => (Format == TextBoxFormats.Currency || Format == TextBoxFormats.Number) ? HorizontalAlignment.Right : HorizontalAlignment.Left;
         }
 
         //валидаторы в зависимости от формата данных

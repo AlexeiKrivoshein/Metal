@@ -1,17 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Xceed.Wpf.Toolkit;
 
 namespace MetalClient.Controls
 {
@@ -85,19 +75,6 @@ namespace MetalClient.Controls
         public void ShowCalendar(object sender, MouseButtonEventArgs e)
         {
             calendar.IsOpen = true;
-        }
-    }
-
-    public class ButtonMarginConverter : IValueConverter
-    {
-        public object Convert(object value, System.Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            return new Thickness(System.Convert.ToDouble(value) * -1, 0, 0, 0);
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            return null;
         }
     }
 }

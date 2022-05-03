@@ -15,6 +15,7 @@
 
     <Window.Resources>
         <local:DateToString x:Key="DateToString"/>
+        <local:DateToDate x:Key="DateToDate"/> 
         <local:OrderStateLocalize x:Key="OrderStateLocalize"/>
         <local:CreateOrderRight x:Key="CreateOrderRight"/>
         <local:GridRowEnabledConverter x:Key="GridRowEnabledConverter"/>
@@ -83,13 +84,11 @@
                                     <ColumnDefinition Width="*"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
 
-                                <wpfTool:DateTimePicker 
-				                            ShowButtonSpinner="False" TimePickerVisibility="Hidden" Grid.Column="0"
-				                            Value="{Binding Filter.DateFrom, Mode=TwoWay, Converter={StaticResource FilterValueConverter}}"/>
-                                
-                                <wpfTool:DateTimePicker 
-				                            ShowButtonSpinner="False" TimePickerVisibility="Hidden" Grid.Column="1"
-				                            Value="{Binding Filter.DateTo, Mode=TwoWay, Converter={StaticResource FilterValueConverter}}"/>
+                                <controls:MDatePicker Grid.Column="0" Margin="5"
+				                            Date="{Binding Filter.DateFrom, Mode=TwoWay}"/>
+
+                                <controls:MDatePicker Grid.Column="1" Margin="5"
+				                            Date="{Binding Filter.DateTo, Mode=TwoWay}"/>
                             </Grid>
 
                             <Label>Номер заказа</Label>
@@ -99,12 +98,12 @@
                                     <ColumnDefinition Width="*"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
 
-                                <TextBox Grid.Column="0" 
-                                         Text="{Binding Filter.NumberFrom, Mode=TwoWay, Converter={StaticResource FilterValueConverter}}"
-                                         PreviewTextInput="IntValid"/>
-                                <TextBox Grid.Column="1"
-                                         Text="{Binding Filter.NumberTo, Mode=TwoWay, Converter={StaticResource FilterValueConverter}}"
-                                         PreviewTextInput="IntValid"/>
+                                <controls:MTextBox Grid.Column="0" 
+                                         Format="Number"
+                                         Text="{Binding Filter.NumberFrom, Mode=TwoWay, Converter={StaticResource FilterValueConverter}}"/>
+                                <controls:MTextBox Grid.Column="1"
+                                         Format="Number"
+                                         Text="{Binding Filter.NumberTo, Mode=TwoWay, Converter={StaticResource FilterValueConverter}}"/>
                             </Grid>
 
                             <Label>Группа заказа</Label>
@@ -129,12 +128,12 @@
                                     <ColumnDefinition Width="*"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
 
-                                <TextBox Grid.Column="0"
-                                         Text="{Binding Filter.CountFrom, Mode=TwoWay, Converter={StaticResource FilterValueConverter}}"
-                                         PreviewTextInput="IntValid"/>
-                                <TextBox Grid.Column="1"
-                                         Text="{Binding Filter.CountTo, Mode=TwoWay, Converter={StaticResource FilterValueConverter}}"
-                                         PreviewTextInput="IntValid"/>
+                                <controls:MTextBox Grid.Column="0"
+                                                   Format="Number"
+                                                   Text="{Binding Filter.CountFrom, Mode=TwoWay, Converter={StaticResource FilterValueConverter}}"/>
+                                <controls:MTextBox Grid.Column="1"
+                                                   Format="Number"
+                                                   Text="{Binding Filter.CountTo, Mode=TwoWay, Converter={StaticResource FilterValueConverter}}"/>
                             </Grid>
 
                             <Label>Заказчик</Label>
@@ -175,12 +174,12 @@
                                     <ColumnDefinition Width="*"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
 
-                                <TextBox Grid.Column="0"
-                                         Text="{Binding Filter.CalcPriceFrom, Mode=TwoWay, Converter={StaticResource FilterValueConverter}}"
-                                         PreviewTextInput="DoubleValid"/>
-                                <TextBox Grid.Column="1"
-                                         Text="{Binding Filter.CalcPriceTo, Mode=TwoWay, Converter={StaticResource FilterValueConverter}}"
-                                         PreviewTextInput="DoubleValid"/>
+                                <controls:MTextBox Grid.Column="0"
+                                                   Format="Currency"
+                                                   Text="{Binding Filter.CalcPriceFrom, Mode=TwoWay, Converter={StaticResource FilterValueConverter}}"/>
+                                <controls:MTextBox Grid.Column="1"
+                                                   Format="Currency"
+                                                   Text="{Binding Filter.CalcPriceTo, Mode=TwoWay, Converter={StaticResource FilterValueConverter}}"/>
                             </Grid>
 
                             <Label>Предлагаемая цена</Label>
@@ -205,12 +204,13 @@
                                     <ColumnDefinition Width="*"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
 
-                                <TextBox Grid.Column="0"
-                                         Text="{Binding Filter.SalesPriceFrom, Mode=TwoWay, Converter={StaticResource FilterValueConverter}}"
-                                         PreviewTextInput="DoubleValid"/>
-                                <TextBox Grid.Column="1"
-                                         Text="{Binding Filter.SalesPriceTo, Mode=TwoWay, Converter={StaticResource FilterValueConverter}}"
-                                         PreviewTextInput="DoubleValid"/>
+                                <controls:MTextBox Grid.Column="0"
+                                         Format="Currency"
+                                         Text="{Binding Filter.SalesPriceFrom, Mode=TwoWay, Converter={StaticResource FilterValueConverter}}"/>
+
+                                <controls:MTextBox Grid.Column="1"
+                                         Format="Currency"
+                                         Text="{Binding Filter.SalesPriceTo, Mode=TwoWay, Converter={StaticResource FilterValueConverter}}"/>
                             </Grid>
 
                             <Label>Срок изготовления</Label>
@@ -220,13 +220,11 @@
                                     <ColumnDefinition Width="*"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
 
-                                <wpfTool:DateTimePicker 
-				                            ShowButtonSpinner="False" TimePickerVisibility="Hidden" Grid.Column="0"
-				                            Value="{Binding Filter.ReadyDateFrom, Mode=TwoWay, Converter={StaticResource FilterValueConverter}}"/>
-                                
-                                <wpfTool:DateTimePicker 
-				                            ShowButtonSpinner="False" TimePickerVisibility="Hidden"  Grid.Column="1"
-				                            Value="{Binding Filter.ReadyDateTo, Mode=TwoWay, Converter={StaticResource FilterValueConverter}}"/>
+                                <controls:MDatePicker Grid.Column="0" Margin="5"
+				                            Date="{Binding Filter.ReadyDateFrom, Mode=TwoWay}"/>
+
+                                <controls:MDatePicker Grid.Column="1" Margin="5"
+				                            Date="{Binding Filter.ReadyDateTo, Mode=TwoWay}"/>
                             </Grid>
                         </StackPanel>
                         
