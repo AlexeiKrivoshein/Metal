@@ -179,12 +179,6 @@ namespace MetalClient
             order.ShowDialog();
         }
 
-        private void grdOperation_Unloaded(object sender, RoutedEventArgs e)
-        {
-            var grid = (DataGrid)sender;
-            grid.CommitEdit(DataGridEditingUnit.Row, true);
-        }
-
         private void DoubleValid(object sender, TextCompositionEventArgs e)
         {
             e.Handled = !(new Regex(@"[0-9\.]").IsMatch(e.Text));

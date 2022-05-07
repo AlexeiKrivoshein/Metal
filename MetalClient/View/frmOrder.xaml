@@ -844,14 +844,10 @@
                             <Label></Label>
                         </DockPanel>
                     </Border>
-                    <DataGrid Grid.Row="7" Grid.ColumnSpan="3"
-                            Name ="grdOperation" 
-                            AutoGenerateColumns="False"
-                            CanUserAddRows="False"
-                            Unloaded="grdOperation_Unloaded"
-                            ItemsSource="{Binding OrderOperations}"
+                    <controls:MDataGrid Grid.Row="7" Grid.ColumnSpan="3"
+                            ItemsSource="{Binding OrderOperations, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             SelectedItem="{Binding SelectedOrderOperation}">
-                        <DataGrid.Columns>
+                        <controls:MDataGrid.Columns>
                             <DataGridTemplateColumn Header="Ф.И.О." Width="*">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
@@ -890,8 +886,8 @@
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <TextBox BorderThickness="0" Margin="0" 
-                                                    Text="{Binding Count, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                                    PreviewTextInput="IntValid"/>
+                                            Text="{Binding Count, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                            PreviewTextInput="IntValid"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
@@ -900,7 +896,7 @@
                                     <DataTemplate>
                                         <controls:MDatePicker
                                             Border="0" IsTimePickerVisibility="True"
-				                            Date="{Binding StartDate, Mode=TwoWay}"/>
+				                            Date="{Binding StartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
@@ -909,7 +905,7 @@
                                     <DataTemplate>
                                         <controls:MDatePicker
                                             Border="0" IsTimePickerVisibility="True"
-				                            Date="{Binding EndDate, Mode=TwoWay}"/>
+				                            Date="{Binding EndDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
@@ -917,12 +913,12 @@
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <TextBox BorderThickness="0" Margin="0" 
-                                        Text="{Binding Comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                            Text="{Binding Comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                        </DataGrid.Columns>
-                    </DataGrid>
+                        </controls:MDataGrid.Columns>
+                    </controls:MDataGrid>
                     <!--ИЗГОТОВЛЕНИЕ ЗАКОНЧЕНО-->
                     <Border Grid.Row="8" Style="{StaticResource IndexBorderStyle}">
                         <TextBlock HorizontalAlignment="Center"><Run Text="18"/></TextBlock>
@@ -1007,7 +1003,7 @@
                         Grid.Row="1" Grid.Column="2" Margin="5"
 				        Date="{Binding Element.OTKProductGetDate, Mode=TwoWay}"
                         IsEnabled="{Binding ElementName=Row4_1, Path=IsEnabled}"/>
-                    <!--ИЗДЕЛИЕ ВОЗВРАЩЕНО В ДРАБОТКУ-->
+                    <!--ИЗДЕЛИЕ ВОЗВРАЩЕНО В ДОРАБОТКУ-->
                     <Border Grid.Row="2" Style="{StaticResource IndexBorderStyle}">
                         <TextBlock HorizontalAlignment="Center"><Run Text="20"/></TextBlock>
                     </Border>

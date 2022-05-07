@@ -214,16 +214,18 @@ namespace MetalClient.ViewModel
                     }
                     else
                     {
-                        /*
                         var data = t.Result;
                         var orderOperations = new ObservableCollection<OrderOperationDTO>();
                         foreach (var item in data.Elements)
+                        {
                             if (item is OrderOperationDTO operation)
+                            {
                                 orderOperations.Add(operation);
+                            }
+                        }
 
                         OrderOperations = orderOperations;
                         State = ElementState.Loaded;
-                        */
                         return true;
                     }
                 });
