@@ -85,6 +85,7 @@
     <Compile Include="Dialog\WindowService.cs" />
     <Compile Include="Engine\ObservableConcurrentDictionary.cs" />
     <Compile Include="Exceptions\RequestException.cs" />
+    <Compile Include="Helper\BindingProxy.cs" />
     <Compile Include="Helper\EnumHelper.cs" />
     <Compile Include="Helper\ValueDescription.cs" />
     <Compile Include="Helper\VisualComponentHelper.cs" />

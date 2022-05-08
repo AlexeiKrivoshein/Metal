@@ -322,11 +322,14 @@ namespace MetalClient.ViewModel
         {
             if (LimitCardVM == null)//лимитная карточка не была создана, т.е. заказ не загружен а создан
             {
-                LimitCardVM = new LimitCardViewModel(DataManager, Element.Id, Element.TechCalcMultiplier, false, !UserGroupHelper.IsEditing(LockObject, UserGroupHelper.TECH_1_2), Element.Count);
+                LimitCardVM = new LimitCardViewModel(DataManager, Element.Id, Element.TechCalcMultiplier, isFact, !UserGroupHelper.IsEditing(LockObject, UserGroupHelper.TECH_1_2), Element.Count);
                 LimitCardVM.Load();
             }
+            else
+            {
+                LimitCardVM.IsFact = isFact;
+            }
 
-            LimitCardVM.IsFact = isFact;
             ShowLimitCard(LimitCardVM);
 
             if (!LimitCardVM.IsModify)

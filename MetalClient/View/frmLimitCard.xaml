@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MetalClient"
         xmlns:v="clr-namespace:MetalClient.ValidateRule"
-        xmlns:controls="clr-namespace:MetalClient.Controls"
+        xmlns:controls="clr-namespace:MetalClient.Controls" 
+        xmlns:helper="clr-namespace:MetalClient.Helper"
         mc:Ignorable="d"
         Title="Спецификация – лимитная карточка" 
         Height="750" 
@@ -17,6 +18,7 @@
     <Window.Resources>
         <CollectionViewSource x:Key="MaterialCache" Source="{Binding MaterialVM.MaterialCache}" />
         <local:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <helper:BindingProxy x:Key="IsFactProxy" Data="{Binding MaterialVM.IsFactMaterial}"/>
     </Window.Resources>
     
     <Grid>
@@ -41,6 +43,7 @@
                       ItemsSource="{Binding Elements}"
                       SelectedItem="{Binding Selected, Mode=TwoWay}">
                 <controls:MDataGrid.Columns>
+                    <!--Плановые материалы-->
                     <DataGridTemplateColumn Header="Наименование&#x0a;материалов" Width="1*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -114,9 +117,10 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    
+
+                    <!--Фактические материалы-->
                     <DataGridTemplateColumn Header="Факт. материал" Width="1*"
-                                            Visibility="{Binding IsFact, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneTime}">
+                                            Visibility="{Binding Data, Converter={StaticResource BoolToVisibilityConverter}, Source={StaticResource IsFactProxy}}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <ListBox HorizontalAlignment="Stretch" BorderThickness="0"  Padding="0,-2,0,0"
@@ -153,9 +157,8 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    
                     <DataGridTemplateColumn Header="Факт.&#x0a;кол-во" Width="60"
-                                            Visibility="{Binding IsFact, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneTime}">
+                                            Visibility="{Binding Data, Converter={StaticResource BoolToVisibilityConverter}, Source={StaticResource IsFactProxy}}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <ListBox HorizontalAlignment="Stretch" BorderThickness="0"  Padding="0,-2,0,0"
@@ -184,9 +187,8 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    
                     <DataGridTemplateColumn Header="Цена&#x0a;за ед" Width="65"
-                                            Visibility="{Binding IsFact, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneTime}">
+                                            Visibility="{Binding Data, Converter={StaticResource BoolToVisibilityConverter}, Source={StaticResource IsFactProxy}}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <ListBox HorizontalAlignment="Stretch" BorderThickness="0"  Padding="0,-2,0,0"
