@@ -15,8 +15,23 @@ namespace MetalCore.ModelEx
 
         void CopyFrom(IModelElement<T> value);
 
-        void LoadNested(MetalEDMContainer context, ModelManager manager);
+        /// <summary>
+        /// Инициализация связанных внешних элементов
+        /// </summary>
+        /// <param name="manager"></param>
+        void LoadOuther(ModelManager manager);
 
-        void RemoveNested(MetalEDMContainer context, ModelManager manager, bool permanent);
+        /// <summary>
+        /// Сохранение вложенных объектов
+        /// </summary>
+        /// <param name="manager"></param>
+        void SaveInner(ModelManager manager);
+
+        /// <summary>
+        /// Удаление всех вложенных связанных объектов
+        /// </summary>
+        /// <param name="manager"></param>
+        /// <param name="permanent"></param>
+        void RemoveInner(ModelManager manager, bool permanent);
     }
 }

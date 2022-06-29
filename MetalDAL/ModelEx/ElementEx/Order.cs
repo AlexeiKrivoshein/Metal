@@ -1,10 +1,8 @@
 ﻿using MetalDAL.Manager;
 using MetalDAL.ModelEx;
 using MetalDAL.ModelEx.ElementEx;
-using MetalTransport.Helper;
 using MetalTransport.ModelEx;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -19,38 +17,37 @@ namespace MetalDAL.Model
             return OrderDTO.ToPlanDTO(ToDTO());
         }
 
-        public override void LoadNested(MetalEDMContainer context, ModelManager manager)
+        public override void LoadOuther(ModelManager manager)
         {
-            if (context is null)
-                throw new ArgumentNullException(nameof(context));
-
-            Customer = context.CustomerSet.Find(CustomerId);
-            CustomerId = Customer.Id;
-
-            if (OrderGroupId.HasValue && OrderGroupId != Guid.Empty)
+            using (var context = new MetalEDMContainer())
             {
-                OrderGroup = context.OrderGroupSet.Find(OrderGroupId);
-                OrderGroupId = OrderGroup.Id;
-            }
-            else
-            {
-                OrderGroup = null;
-                OrderGroupId = null;
+                //контрагент
+                Customer = context.CustomerSet.Find(CustomerId);
+                CustomerId = Customer.Id;
+
+                //группа заказа
+                if (OrderGroupId.HasValue && OrderGroupId != Guid.Empty)
+                {
+                    OrderGroup = context.OrderGroupSet.Find(OrderGroupId);
+                    OrderGroupId = OrderGroup.Id;
+                }
+                else
+                {
+                    OrderGroup = null;
+                    OrderGroupId = null;
+                }
             }
         }
 
-        public override void RemoveNested(MetalEDMContainer context, ModelManager manager, bool permanent)
+        public override void RemoveInner(ModelManager manager, bool permanent)
         {
-            if (context is null)
-                throw new ArgumentNullException(nameof(context));
-
             if (manager is null)
                 throw new ArgumentNullException(nameof(manager));
 
             //чертежи
             OrderDrawings.ToList().ForEach(drawing =>
             {
-                manager.RemovePartOfOrderElement<MetalFile>(drawing.Id, context);
+                manager.RemovePartOfOrderElement<MetalFile>(drawing.Id);
 
                 if (File.Exists(drawing.Path))
                     File.Delete(drawing.Path);
@@ -59,19 +56,19 @@ namespace MetalDAL.Model
             //работы
             OrderWork.ToList().ForEach(work =>
             {
-                manager.RemovePartOfOrderElement<OrderOperation>(work.Id, context);
+                manager.RemovePartOfOrderElement<OrderOperation>(work.Id);
             });
 
             //материалы лимитки
             LimitCard.ToList().ForEach(material =>
             {
-                manager.RemovePartOfOrderElement<LimitCardMaterial>(material.Id, context);
+                manager.RemovePartOfOrderElement<LimitCardMaterial>(material.Id);
             });
 
             //работы лимитки
             LimitCardWork.ToList().ForEach(work =>
             {
-                manager.RemovePartOfOrderElement<LimitCardOperation>(work.Id, context);
+                manager.RemovePartOfOrderElement<LimitCardOperation>(work.Id);
             });
         }
     }

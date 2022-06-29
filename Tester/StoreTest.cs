@@ -1085,7 +1085,7 @@ namespace Tester
             var stored = modelManager.GetElement<Order>(order.Id); 
             Assert.IsTrue(cache.TryGetObjectVersion(order.Id, out var _));
 
-            modelManager.RemoveVersioningElement<Order>(stored.Id, false);
+            modelManager.RemoveVersioningElement<Order>(stored.Id, true);
             Assert.IsFalse(cache.TryGetObjectVersion(order.Id, out var _));
 
             //элементы не ведущие кеш версии добавляться не должны

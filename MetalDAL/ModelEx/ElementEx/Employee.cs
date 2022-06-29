@@ -14,29 +14,31 @@ namespace MetalDAL.Model
         public string ShortName => Funcs.GetShortName(Secondname, Name, Patronymic);
         public string FullName => Funcs.GetFullName(Secondname, Name, Patronymic);
 
-        public override void LoadNested(MetalEDMContainer context, ModelManager manager)
+        public override void LoadOuther(ModelManager manager)
         {
-            if (context is null)
-                throw new ArgumentNullException(nameof(context));
+            using (var context = new MetalEDMContainer())
+            {
+                //инициализация группы
+                if (UserGroupId.HasValue && UserGroupId != Guid.Empty)
+                {
+                    UserGroup = context.UserGroupSet.Find(UserGroupId);
+                }
+                else
+                {
+                    UserGroup = null;
+                    UserGroupId = null;
+                }
 
-            if (UserGroupId.HasValue && UserGroupId != Guid.Empty)
-            {
-                UserGroup = context.UserGroupSet.Find(UserGroupId);
-            }
-            else
-            {
-                UserGroup = null;
-                UserGroupId = null;
-            }
-
-            if (PostId.HasValue && PostId != Guid.Empty)
-            {
-                Post = context.PostSet.Find(PostId);
-            }
-            else
-            {
-                Post = null;
-                PostId = null;
+                //инициализация должности
+                if (PostId.HasValue && PostId != Guid.Empty)
+                {
+                    Post = context.PostSet.Find(PostId);
+                }
+                else
+                {
+                    Post = null;
+                    PostId = null;
+                }
             }
         }
     }

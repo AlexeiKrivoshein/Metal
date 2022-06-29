@@ -18,6 +18,7 @@ using MetalCore.ModelEx;
 using System.Text;
 using MetalTransport.ModelEx.Enums;
 using MetalTransport.Datagram.GetListData;
+using MetalDAL.Helpers;
 
 namespace MetalDAL.Manager
 {
@@ -497,6 +498,7 @@ namespace MetalDAL.Manager
             }
         }
 
+
         /// <summary>
         /// Получение отдельного элемента из базы данных в контексте 
         /// </summary>
@@ -529,7 +531,7 @@ namespace MetalDAL.Manager
                     cache.SetObjectVersion(version.Id, version.Version);
                 }
 
-                element.LoadNested(context, this);
+                element.LoadOuther(this);
 
                 return element.ToDTO();
             }
@@ -594,65 +596,17 @@ namespace MetalDAL.Manager
         }
 
         /// <summary>
-        /// Сохранение/обновление лимитки
-        /// </summary>
-        /// <typeparam name="T">Тип сохраняемого элемента</typeparam>
-        /// <param name="element">Элемент</param>
-        /// <param name="version">Версия (для типов ведущих версии, иначе -1)</param>
-        public HandledDTO SetElement(LimitCardMaterial element)
-        {
-            if (element is null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
-
-            _load.Wait();
-
-            using (var context = new MetalEDMContainer())
-            {
-                if (element.Id != Guid.Empty)
-                {
-                    var exists = context.LimitCardMaterialSet.Find(element.Id);
-                    if (exists != null && exists.FactMaterials.Any())
-                    {
-                        context.LimitCardFactMaterialSet.RemoveRange(exists.FactMaterials);
-                    }
-
-                    if (!context.GetValidationErrors().Any(v => !v.IsValid))
-                    {
-                        context.SaveChanges();
-                    }
-                    else
-                    {
-                        var error = new StringBuilder();
-
-                        foreach (var exception in context.GetValidationErrors())
-                        {
-                            foreach (var validation in exception.ValidationErrors)
-                            {
-                                error.AppendLine($"{validation.PropertyName} {validation.ErrorMessage}");
-                            }
-                        }
-
-                        throw new Exception(error.ToString());
-                    }
-                }
-            }
-
-            return InnerSetElement(element);
-        }
-
-        /// <summary>
         /// Сохранение/обновление элемента БД
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">Тип сохраняемого элемента</typeparam>
         /// <param name="element">Элемент</param>
         /// <returns></returns>
         public HandledDTO SetElement<T>(T element)
             where T : class, IModelElement<T>
         {
-            return InnerSetElement(element);
-        }       
+            InnerSetElement(element);
+            return HandledDTO.Success(element.Id);
+        }
 
         /// <summary>
         /// Сохранение/обновление элемента
@@ -660,21 +614,26 @@ namespace MetalDAL.Manager
         /// <typeparam name="T">Тип сохраняемого элемента</typeparam>
         /// <param name="element">Элемент</param>
         /// <param name="version">Версия (для типов ведущих версии, иначе -1)</param>
-        private HandledDTO InnerSetElement<T>(T element)
+        internal void InnerSetElement<T>(T element)
             where T: class, IModelElement<T>
         {
-            _load.Wait();
-
             if (element == null)
                 throw new ArgumentNullException(nameof(element));
 
+            //ожидание старта менеджера
+            _load.Wait();
+
+            element.LoadOuther(this);
+
             using (var context = new MetalEDMContainer())
             {
+                //поиск связанного с типом набора данных
                 var set = context.Set<T>();
 
                 if (set is null)
                     throw new Exception(UNKNOWN_SET);
 
+                //установка новой версии
                 IVersionModelElement<T> versioning = null;
                 if (element is IVersionModelElement<T>)
                 {
@@ -685,8 +644,7 @@ namespace MetalDAL.Manager
                     versioning.Version = version;
                 }
 
-                element.LoadNested(context, this);
-
+                //добавление/обновление элемента
                 var id = element.Id;
 
                 if (id != Guid.Empty)
@@ -704,32 +662,24 @@ namespace MetalDAL.Manager
                     set.Add(element);
                 }
 
+                //сохранение состояния
                 if (!context.GetValidationErrors().Any(v => !v.IsValid))
                 {
                     context.SaveChanges();
 
-                    if(VersionManager.TryGetVersionCache<T>(out var cache))
+                    if (VersionManager.TryGetVersionCache<T>(out var cache))
                     {
                         cache.SetObjectVersion(versioning.Id, versioning.Version);
                     }
                 }
                 else
                 {
-                    var error = new StringBuilder();
-
-                    foreach (var exception in context.GetValidationErrors())
-                    {
-                        foreach (var validation in exception.ValidationErrors)
-                        {
-                            error.AppendLine($"{validation.PropertyName} {validation.ErrorMessage}");
-                        }
-                    }
-
-                    throw new Exception(error.ToString());
+                    throw Helper.GetValidationException(context.GetValidationErrors());
                 }
-            }
 
-            return HandledDTO.Success(element.Id);
+                //добавление/обновление внутренних элементов
+                element.SaveInner(this);
+            }
         }
 
         /// <summary>
@@ -774,7 +724,7 @@ namespace MetalDAL.Manager
             if (!VersionManager.TryGetNext<T>(out var version))
                 throw new ArgumentException($"Не удалось определить версию для типа {element.GetType()}");
 
-            element.RemoveNested(context, this, permanent);
+            element.RemoveInner(this, permanent);
 
             if (permanent)
             {
@@ -831,55 +781,85 @@ namespace MetalDAL.Manager
         {
             using (var context = new MetalEDMContainer())
             {
-                return RemovePartOfOrderElement<T>(id, context);
-            }
-        }
 
-        /// <summary>
-        /// Удаление версионируемого элемента из банка данных в контексте context
-        /// </summary>
-        /// <param name="data"></param>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        public HandledDTO RemovePartOfOrderElement<T>(Guid id, MetalEDMContainer context)
-            where T : class, IPartOfOrderModelElement<T>
-        {
-            if (context == null)
-                throw new ArgumentNullException(nameof(context));
+                _load.Wait();
 
-            _load.Wait();
+                var set = context.Set<T>();
 
-            var set = context.Set<T>();
+                if (set is null)
+                    throw new Exception(UNKNOWN_SET);
 
-            if (set is null)
-                throw new Exception(UNKNOWN_SET);
+                var element = set.Find(id);
 
-            var element = set.Find(id);
+                element.RemoveInner(this, true);
+                set.Remove(element);
 
-            element.RemoveNested(context, this, true);
-            set.Remove(element);
-
-            if (!context.GetValidationErrors().Any(v => !v.IsValid))
-            {
-                context.SaveChanges();
-            }
-            else
-            {
-                var error = new StringBuilder();
-
-                foreach (var exception in context.GetValidationErrors())
+                if (!context.GetValidationErrors().Any(v => !v.IsValid))
                 {
-                    foreach (var validation in exception.ValidationErrors)
-                    {
-                        error.AppendLine($"{validation.PropertyName} {validation.ErrorMessage}");
-                    }
+                    context.SaveChanges();
                 }
+                else
+                {
+                    var error = new StringBuilder();
 
-                throw new Exception(error.ToString());
+                    foreach (var exception in context.GetValidationErrors())
+                    {
+                        foreach (var validation in exception.ValidationErrors)
+                        {
+                            error.AppendLine($"{validation.PropertyName} {validation.ErrorMessage}");
+                        }
+                    }
+
+                    throw new Exception(error.ToString());
+                }
             }
 
             return HandledDTO.Success(id);
         }
+
+        /// <summary>
+        /// Удаление элемента из банка данных
+        /// </summary>
+        public HandledDTO RemoveElement<T>(Guid id)
+            where T : class, IModelElement<T>
+        {
+            _load.Wait();
+
+            using (var context = new MetalEDMContainer())
+            {
+                var set = context.Set<T>();
+
+                if (set is null)
+                    throw new Exception(UNKNOWN_SET);
+
+                var element = set.Find(id);
+
+                element.RemoveInner(this, true);
+                set.Remove(element);
+
+                if (!context.GetValidationErrors().Any(v => !v.IsValid))
+                {
+                    context.SaveChanges();
+                }
+                else
+                {
+                    var error = new StringBuilder();
+
+                    foreach (var exception in context.GetValidationErrors())
+                    {
+                        foreach (var validation in exception.ValidationErrors)
+                        {
+                            error.AppendLine($"{validation.PropertyName} {validation.ErrorMessage}");
+                        }
+                    }
+
+                    throw new Exception(error.ToString());
+                }
+
+                return HandledDTO.Success(id);
+            }
+        }
+
 
         /// <summary>
         /// Получить отфильтрованные данные

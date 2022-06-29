@@ -1,9 +1,11 @@
 ﻿using MetalCore.ModelEx;
+using MetalDAL.Helpers;
 using MetalDAL.Manager;
 using MetalDAL.ModelEx;
 using MetalDAL.ModelEx.ElementEx;
 using MetalTransport.ModelEx;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace MetalDAL.Model
@@ -57,15 +59,62 @@ namespace MetalDAL.Model
             }
         }
 
-        public override void RemoveNested(MetalEDMContainer context, ModelManager manager, bool permanent)
+        public override void RemoveInner(ModelManager manager, bool permanent)
         {
-            if (context is null)
-                throw new ArgumentNullException(nameof(context));
-
             if (manager is null)
                 throw new ArgumentNullException(nameof(manager));
 
-            context.LimitCardFactMaterialSet.RemoveRange(FactMaterials);
+            using (var context = new MetalEDMContainer())
+            {
+                context.LimitCardFactMaterialSet.RemoveRange(FactMaterials);
+            }
+        }
+
+        public override void SaveInner(ModelManager manager)
+        {
+            if (manager is null)
+                throw new ArgumentNullException(nameof(manager));
+
+            //получение идентификаторов удаленных фактических материалов
+            List<Guid> removedIds = null;
+            using (var context = new MetalEDMContainer())
+            {
+                var stored = context.LimitCardMaterialSet.Find(Id);
+                removedIds = stored.FactMaterials.Select(material => material.Id)
+                            .Except(FactMaterials.Select(material => material.Id)).ToList();
+            }
+
+            //удаление фактических материалов
+            if (removedIds != null)
+            {
+                foreach (var id in removedIds)
+                {
+                    manager.RemoveElement<LimitCardFactMaterial>(id);
+                }
+            }
+
+            //добавление/обновление фактических материалов
+            if (FactMaterials.Any())
+            {
+                foreach (var material in FactMaterials)
+                {
+                    manager.InnerSetElement(material);
+                }
+            }
+        }
+
+        public override void LoadOuther(ModelManager manager)
+        {
+            base.LoadOuther(manager);
+
+            using (var context = new MetalEDMContainer())
+            {
+                ///материал из справочника
+                if (MaterialId != Guid.Empty)
+                {
+                    Material = context.MaterialSet.Find(MaterialId);
+                }
+            }
         }
     }
 }

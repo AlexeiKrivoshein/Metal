@@ -41,8 +41,13 @@ namespace MetalDAL.ModelEx.ElementEx
             return dto;
         }
         
-        public virtual void LoadNested(MetalEDMContainer context, ModelManager manager) { }
+        //загрузка вложенных объектов/коллекций
+        public virtual void LoadOuther(ModelManager manager) { }
 
-        public virtual void RemoveNested(MetalEDMContainer context, ModelManager manager, bool permanent) { }
+        //удаление не справчных вложенных объектов/коллекций(справчное значение может использоваться в другой сущности)
+        public virtual void RemoveInner(ModelManager manager, bool permanent) { }
+
+        //сохранение вложенных объектов/коллекций
+        public virtual void SaveInner(ModelManager manager) { }
     }
 }
